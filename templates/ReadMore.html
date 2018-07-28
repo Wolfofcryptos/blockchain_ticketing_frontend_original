@@ -10,14 +10,12 @@
         <md-card-content>
           <form name="FormLogin">
             <md-input-container class="md-block">
-              <label>Login</label>
               <input type="text" name="email" ng-model="vm.formData.email" placeholder="login" required=""/>
               <div ng-messages="FormLogin.email.$error" role="alert" multiple="">
                 <div ng-message="required" class="my-message">Please enter your email.</div>
               </div>
             </md-input-container>
             <md-input-container class="md-block">
-              <label>Password</label>
               <input type="password" name="password" ng-model="vm.formData.password" placeholder="password" required="" md-maxlength="16"/>
               <div ng-messages="FormLogin.password.$error" role="alert" multiple="">
                 <div ng-message="required" class="my-message">Please enter your password.</div>
@@ -43,28 +41,24 @@
         <md-card-content>
           <form name="Form">
             <md-input-container class="md-block">
-              <label>First Name</label>
               <input type="text" name="FirstName" ng-model="vm.formData.Firstname" placeholder="First Name" required=""/>
               <div ng-messages="Form.FirstName.$error" role="alert" multiple="">
                 <div ng-message="required" class="my-message">Please enter your First Name.</div>
               </div>
             </md-input-container>
              <md-input-container class="md-block">
-              <label>Last Name</label>
               <input type="text" name="LastName" ng-model="vm.formData.Lastname" placeholder="Last Name" required=""/>
               <div ng-messages="Form.LastName.$error" role="alert" multiple="">
                 <div ng-message="required" class="my-message">Please enter your Last Name.</div>
               </div>
             </md-input-container>
             <md-input-container class="md-block">
-              <label>Email</label>
               <input type="text" name="emailreg" ng-model="vm.formData.emailregister" placeholder="Email" required=""/>
               <div ng-messages="Form.emailreg.$error" role="alert" multiple="">
                 <div ng-message="required" class="my-message">Please enter your email.</div>
               </div>
             </md-input-container>
             <md-input-container class="md-block">
-              <label>Password</label>
               <input type="password" name="passwordreg" ng-model="vm.formData.passwordregister" placeholder="password" required="" md-maxlength="16"/>
               <div ng-messages="Form.passwordreg.$error" role="alert" multiple="">
                 <div ng-message="required" class="my-message">Please enter your password.</div>
