@@ -1173,12 +1173,13 @@ md-toast.md-default-theme .md-toast-content, md-toast .md-toast-content {
 
  .eventDesc{
     color: #fff;
-    padding-left: 30%;
+    padding-left: 0%;
+    width: 80%;
+    margin: 0 auto;
  }
 
 .values{
         float: right;
-    margin-right: 55%;
 }
 
 .eventDetails{
