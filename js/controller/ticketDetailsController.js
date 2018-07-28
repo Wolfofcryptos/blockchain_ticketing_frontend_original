@@ -11,7 +11,7 @@ var ticketDetailsController = pulseapp.controller('ticketDetailsController', fun
     $scope.eventName=item.eventName;
 $scope.eventDescription= item.eventDescription;
 $scope.eventVenue=item.eventVenue;
-$scope.ticketOwner=localStorage.getItem("FName");
+$scope.ticketOwner=item.owner;
 $scope.ticketPrice=item.price;
 
 $scope.cancel=function(){
