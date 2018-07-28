@@ -12,7 +12,7 @@
 		<meta http-equiv='expires' content='0'>
 		<meta http-equiv='pragma' content='no-cache'>
 
-
+		<!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous"> -->
 		<link rel="stylesheet" href="css/bootstrap/bootstrap.css">
 		<link rel="stylesheet" href="css/icomoon.css">
 		<link rel="stylesheet" href="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css"
@@ -28,6 +28,7 @@
 
 		<link rel="stylesheet" href="css/styles1.css">
 		 <script src="bower_components/jquery/dist/jquery.min.js"></script>
+		 <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script> -->
 		<script src="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 
 
@@ -91,11 +92,7 @@ var b = url.replace(/'/g, '"');
 window.onpaint = preload();
 
 	</script>
-	<script>
-	
 
-
-	</script>
 
 	</head>
 
@@ -117,4 +114,17 @@ window.onpaint = preload();
 	 	<script src="js/modules/scrollbars.js"></script> -->
 
 	</body>
+
+	<script>
+		window.onload = loadImage();
+		function loadImage(){
+			var height_to_adjust = $(".info-box-icon img").height() - 50;
+	$('.info-box').height(height_to_adjust);
+		};
+$( window ).resize(function() {
+	var height_to_adjust = $(".info-box-icon img").height() - 50;
+	$('.info-box').height(height_to_adjust);
+});
+	
+	</script>
 </html>

@@ -6,9 +6,11 @@
 
 
 var ticketDetailsController = pulseapp.controller('ticketDetailsController', function ($scope,$rootScope,ngProgressFactory,$mdDialog,item,$mdToast,BlockChainData) { 
-$scope.eventName=item.eventName;
-$scope.eventDetails= item.event;
-$scope.eventId=item.id;
+
+    console.log(">>>>>>",item,item.eventDescription,item.eventVenue);
+    $scope.eventName=item.eventName;
+$scope.eventDescription= item.eventDescription;
+$scope.eventVenue=item.eventVenue;
 $scope.ticketOwner=localStorage.getItem("FName");
 $scope.ticketPrice=item.price;
 

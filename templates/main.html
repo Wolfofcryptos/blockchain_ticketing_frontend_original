@@ -1,77 +1,63 @@
 <!-- full layout container  -->
-		<div class="fp-container" ng-controller="pulseController">
+<div class="fp-container" ng-controller="pulseController">
 			<!-- side bar -->
-			<div class="fp-sidebar">
-				<div class>
-					<img class="blockimg" src="images/blockchain.png" >
+					<div class="fp-sidebar new_class">
+						<div class>
+							<img class="blockimg" src="images/blockchain.png" >
+						</div>
+			
+						<div class="fp-hub-container">
+							<div class="tab-content fp-tab-content  mCustomScrollbar" ng-scrollbars ng-scrollbars-config="scrollbarConfig">
+								<div  class="tab-pane fade in active"  >
+									<ul  class="fp-menu">
+										<li  class="side-panel"  ng-hide="loggedin" ng-click="hometab()">
+											<a ng-class="{'activeList': SelectedIndex == 'Home'}">
+												<span class="glyphicon glyphicon-home iconstyle" ></span>
+												<span class="list-text">Home</span>
+											</a>
+										</li>
+										<li  class="side-panel"   ng-hide="loggedin" ng-click="ticketstab()">
+											<a ng-class="{'activeList': SelectedIndex == 'Tickets'}">
+												<span class="glyphicon glyphicon-tag iconstyle" ></span>
+												<span class="list-text">Tickets</span>
+											</a>
+										</li>
+										<li  class="side-panel"   ng-show="userStatus=='Admin'" ng-click="eventstab()">
+											<a ng-class="{'activeList': SelectedIndex == 'Events'}">
+												<span class="glyphicon glyphicon-film iconstyle" ></span>
+												<span class="list-text">Events</span>
+											</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+
+			<div class="fp-mainbar">
+				<div class="fp-header">
+					<nav class="navbar">
+					<div class="container-fluid">
+						<div class="catetitle-header pull-left">
+							<h3>{{tabTitle}}</h3>
+						</div>
+						<div class="navbar-custom-menu pull-right" >
+							
+							<ul class="nav navbar-nav navbar-right menu-right">
+								<li class="dropdown user-detail">
+									<button class="btn dropdown-toggle btn-userlogin" type="button"  data-toggle="dropdown">{{usertext}}
+									<span class="caret"></span></button>
+									<ul class="dropdown-menu">
+									<li><a ng-click="signin($event)">{{settings}}</a></li>
+									<li ng-show="eventManagerLogin"><a ng-click="eventLogin($event)" >Event Manager Login</a></li>
+									<li ng-hide="logout"><a  ng-click="clearall()">Logout</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</div>
+					</nav>
 				</div>
-
-				<div class="fp-hub-container">
-					
-
-			<div class="tab-content fp-tab-content  mCustomScrollbar" ng-scrollbars ng-scrollbars-config="scrollbarConfig">
-
-					<div  class="tab-pane fade in active"  >
-					
-					<ul  class="fp-menu">
-						<li  class="side-panel"   ng-click="hometab()">
-							<a ng-class="{'activeList': SelectedIndex == 'Home'}">
-								 <span class="glyphicon glyphicon-home iconstyle" ></span>
-								<span class="list-text">Home</span>
-							</a>
-							
-						</li>
-						<li  class="side-panel"   ng-hide="loggedin" ng-click="ticketstab()">
-							<a ng-class="{'activeList': SelectedIndex == 'Tickets'}">
-								 <span class="glyphicon glyphicon-tag iconstyle" ></span>
-								<span class="list-text">Tickets</span>
-							</a>
-							
-						</li>
-						<li  class="side-panel"   ng-show="userStatus=='Admin'" ng-click="eventstab()">
-							<a ng-class="{'activeList': SelectedIndex == 'Events'}">
-								 <span class="glyphicon glyphicon-film iconstyle" ></span>
-								<span class="list-text">Events</span>
-							</a>
-							
-						</li>
-					</ul>
-					</div>
-
-
-					
-					
-
-					
+				<main ui-view="subview" class="fp-content"></main>
 			</div>
-
-		</div>
-
-		<div class="fp-mainbar">
-			<div class="fp-header">
-				<nav class="navbar">
-				  <div class="container-fluid">
-					<div class="catetitle-header pull-left">
-						<h3>{{tabTitle}}</h3>
-					</div>
-					<div class="navbar-custom-menu pull-right" >
-						
-						<ul class="nav navbar-nav navbar-right menu-right">
-							<li class="dropdown user-detail">
-								<button class="btn dropdown-toggle btn-userlogin" type="button"  data-toggle="dropdown">{{usertext}}
-								<span class="caret"></span></button>
-								<ul class="dropdown-menu">
-								  <li><a ng-click="signin($event)">{{settings}}</a></li>
-								   <li ng-show="eventManagerLogin"><a ng-click="eventLogin($event)" >Event Manager Login</a></li>
-								  <li ng-hide="logout"><a  ng-click="clearall()">Logout</a></li>
-								</ul>
-							</li>
-						</ul>
-					</div>
-				  </div>
-				</nav>
-			</div>
-			<main ui-view="subview" class="fp-content"></main>
-			</div>
-		</div>
 </div>

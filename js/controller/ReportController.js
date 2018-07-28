@@ -7,7 +7,8 @@
 var reportMainController = pulseapp.controller('reportMainController', function ($scope, $rootScope,BlockChainData,ngProgressFactory,$window,$mdDialog,fileUpload,$mdToast,$state) {
 
 	//variables
-	$scope.progressbar = ngProgressFactory.createInstance();
+  $scope.progressbar = ngProgressFactory.createInstance();
+  
 
 //$scope.userStatus='Admin';
 
@@ -129,6 +130,7 @@ $rootScope.$on("CallParentMethod", function(){
 
   
     $scope.getallEvents();
+
   
   
 

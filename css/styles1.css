@@ -343,9 +343,10 @@ background: #373943;
 .box-header {
     color: #fff;
     display: block;
-    padding: 5px;
+    padding: 5px 10px;
     position: relative;
-	border-bottom: 1px solid #24262d;
+    /* border-bottom: 1px solid #24262d; */
+    background: rgba(255,255,255,0.7);
 }
 .content-header{
     color: #fff;
@@ -396,7 +397,7 @@ background: #373943;
 	font-size:13px;
     text-transform: capitalize;
 	font-weight:normal;
-    color: #fff;
+    color: #000;
     margin:0;
 	padding:0;
     text-align: left;
@@ -464,6 +465,7 @@ background: #373943;
 
 .info-box {
     display: block;
+    height:134px;
     min-height: 64px;
     width: 100%;
 }

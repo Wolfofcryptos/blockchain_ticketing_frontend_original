@@ -1,10 +1,12 @@
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function($) {
 	
     /*
         Fullscreen background
     */
     $.backstretch("images/imagebg.jpg");
+
+    
     
     
     

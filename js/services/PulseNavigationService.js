@@ -9,7 +9,7 @@ Functions :
 pulseapp.factory('BlockChainData', function ($rootScope,$http) {
 
 	
-	 var host="http://54.214.71.204:8000/api/";
+	 var host="http://35.163.217.253:8000/api/";
 	var objtemplate={
 		getdata: function (requestParam,requestType,onSuccess, onFailure){
 
