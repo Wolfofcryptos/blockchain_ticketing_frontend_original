@@ -33,10 +33,10 @@ var pulseController = pulseapp.controller('pulseController', function ($rootScop
 
 			console.log("called");
 			$state.go('home.report');
-			$scope.firstname='True';
-			$scope.secondName='Ticketing';
-			$scope.mail='true.ticketing@yahoo.com';
-			$scope.pwd="trueticketing";
+			$scope.firstname='Team';
+			$scope.secondName='True Tickeing';
+			$scope.mail='info@trueticketing.com';
+			$scope.pwd="true ticketing";
 			$scope.serviceType="user/register";
 			$scope.requestParam={first_name:$scope.firstname,last_name:$scope.secondName,emailId:$scope.mail,password:$scope.pwd};
 
@@ -73,7 +73,7 @@ var pulseController = pulseapp.controller('pulseController', function ($rootScop
 		}
 
 	$scope.signin = function(ev,x) {
-	if($rootScope.settings=="LogIn"){
+	if($rootScope.settings=="User LogIn"){
 
 		$mdDialog.show({
 
@@ -107,7 +107,7 @@ var pulseController = pulseapp.controller('pulseController', function ($rootScop
   };
 
   $scope.eventLogin = function(ev) {
-	if($rootScope.settings=="LogIn"){
+	if($rootScope.settings=="User LogIn"){
 		$mdDialog.show({
 
       templateUrl: 'templates/eventManger.html',
