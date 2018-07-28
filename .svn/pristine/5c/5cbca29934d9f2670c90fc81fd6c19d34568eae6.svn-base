@@ -1,0 +1,105 @@
+ var editController = pulseapp.controller('editController', function ($scope, $rootScope,PulseData,ngProgressFactory,$window,$mdDialog,fileUpload,$mdToast,item,$q,$timeout,$interval) {
+    	
+  	
+  	$scope.editname=item.report_title;
+  	$scope.editurl=item.report_url;
+  	$scope.editdesc=item.report_description;
+  	$scope.editdocurl=item.training_doc_url;
+  	$scope.editvideourl=item.training_video_url;
+  	$scope.iconurl=item.report_icon_url;
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+$scope.produceErrors = false;
+    $scope.progressFunction = function() {
+
+
+					var file = $scope.filename;
+           			fileUpload.uploadFileToUrl(file).then(function(data){
+
+           					console.log(data);
+           					console.log($scope.editname);
+           					console.log(data.object.filename);
+           					$scope.iconurl=data.object.filename;
+           					$scope.produceErrors = false;
+           			
+           			},function(data){
+
+
+           				console.log(data);
+           				$scope.produceErrors = true;
+
+           			});
+
+                    return $q(function(resolve, reject) {
+                        $timeout(function() {
+                            !$scope.produceErrors ? resolve() : reject();
+                        }, 1500);
+                    });
+                };
+
+
+     $scope.$watch('editname', function (newValue, oldValue) {
+				if (newValue) {
+					if (newValue.length > 25) {
+					  $scope.editname = oldValue;
+					}
+					$scope.commentLength = 25 - newValue.length;
+				}
+			});
+
+     
+
+     $scope.editSave = function(){
+
+$scope.searchButtonText = "Searching";
+      if($scope.editdocurl== '' ){
+        $scope.editdocurl_rep=null;
+      }else{
+          $scope.editdocurl_rep=$scope.editdocurl;
+      }
+       if($scope.editvideourl== '' ){
+        $scope.editvideourl_rep=null;
+      }else{
+        $scope.editvideourl_rep=$scope.editvideourl;
+      }
+
+
+     	$scope.requestParam={report_title:$scope.editname,report_url:$scope.editurl,report_desc:$scope.editdesc,icon_url:$scope.iconurl,user_id:sessionStorage.getItem("P_user"),doc_url:$scope.editdocurl_rep,video_url:$scope.editvideourl_rep,report_id:item.report_id};
+		$scope.requestType='editReport';
+		PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessEditSave,$scope.OnfailureEditSave);
+
+     }
+
+
+	$scope.OnSuccessEditSave = function(response){
+
+		console.log(response.data);
+    $scope.searchButtonText = "Search";
+    $scope.showSimpleToast('Saved Successfully!');
+    $mdDialog.cancel();
+    $rootScope.$emit("dialogClose");
+
+
+	}
+	$scope.OnfailureEditSave = function(){
+
+		  console.log("failure Edit Save");
+      $scope.searchButtonText = "Search";
+      $scope.showSimpleToast('Edit Failed!');
+	}
+
+ 
+   $scope.showSimpleToast = function(text) {
+   // var pinTo = $scope.getToastPosition();
+
+    $mdToast.show(
+      $mdToast.simple()
+        .textContent(text)
+        .position('top right')
+        .hideDelay(3000)
+    );
+  };
+
+
+});

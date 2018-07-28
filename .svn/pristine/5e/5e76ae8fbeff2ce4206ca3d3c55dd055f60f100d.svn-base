@@ -1,0 +1,51 @@
+/*
+
+
+
+*/
+
+
+var linkController = pulseapp.controller('linkController', function ($scope, $rootScope,PulseData) { 
+
+	//variables
+	
+	$scope.linkList=[];
+
+
+	$scope.linkListdetails = function(){
+		
+			$scope.requestType="index.php/getReportDetails?";
+			$scope.requestParam={category_id :$rootScope.categoryId};
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccesslinkList,$scope.OnfailurelinkList)
+		
+	}
+	
+	$scope.OnSuccesslinkList = function(response) {
+		
+		$scope.linkList=response.data.files;
+		
+		
+		
+	}
+	
+	$scope.OnfailurelinkList=function(response){
+		
+		console.log("Link List HTTP Fail");
+	}
+	
+	
+	$rootScope.$on("CallParentMethod", function(events,categoryid){
+		$rootScope.categoryId=categoryid;
+        $scope.linkListdetails();
+        });
+
+	$scope.init = function (){
+		
+		$scope.linkListdetails();
+	
+	}  
+
+	$scope.init();
+
+
+});

@@ -1,0 +1,53 @@
+
+var pulseController = pulseapp.controller('pulseController', function ($scope, PulseData,$rootScope) {
+	
+		
+	
+
+		$scope.categoryList = [];
+		$scope.tab ='report';
+		
+		$scope.reportlist = function (categoryType){
+			
+			$scope.tab=categoryType;
+			
+				switch (categoryType) {
+						case 'report':
+							$scope.requestParam={category_type :'report'};	
+							break;
+						case 'links':
+							$scope.requestParam={category_type :'common'};
+							break;
+						default:
+
+				}
+			
+			
+			$scope.tab = categoryType;
+			$scope.requestType="index.php/getCategory?";
+			//$scope.requestParam={category_type :categoryType};
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessReportlist,$scope.OnfailureReportlist)
+			
+	
+		}
+
+		$scope.OnSuccessReportlist = function(response) {
+			
+			console.log(response);
+			$scope.categoryList=response.data.files;
+			$rootScope.categoryId=response.data.files[0].category_id;
+			window.location.hash="/"+$scope.tab;
+		}
+		
+		$scope.OnfailureReportlist = function(response) {
+			
+			console.log("Category List HTTP Fail");
+			
+		}
+		
+		$scope.categoryListClick = function(categoryId) {
+			
+			//$rootScope.categoryId=categoryId;
+			 $rootScope.$emit("CallParentMethod",categoryId);
+		}
+});

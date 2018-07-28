@@ -1,0 +1,63 @@
+<div class="wrapper">
+
+	<header class="popuphead">
+	<p>Add New</p>
+	<hr class="popuphr">
+	</header>
+	
+
+	<div class="form-content">
+	<div class="text-content">
+
+	<input type="text" name="reportTitle" placeholder="Report Title">
+
+	<input type="text" name="url" placeholder="Url">
+
+	<textarea placeholder="Description"></textarea>
+	<p>(Max 256 charcters)*</p>
+
+	</div>
+
+	
+	<div class="upload">
+
+	<div class="inner-upload1">
+		<label>Upload Icon : </label>
+		<div class="upload-option">
+			<label for="file-upload1" class="custom-file-upload">
+    	 	Browse
+			</label>
+			<input type="file" id="file-upload1"  class="inputfile"/>	
+
+		</div>
+		<div class="uploadbtn">
+			
+			</div>
+	
+	</div>
+	<div class="clear"></div>
+	<div class="inner-upload2">
+
+		<label>Upload Image :</label>
+		<div class="upload-option">
+			<label for="file-upload2" class="custom-file-upload">
+    		 Browse
+			</label>
+			<input type="file" id="file-upload2"  class="inputfile"/>	
+		</div>
+		<div class="uploadbtn">
+			
+			</div>
+	</div>
+	<div class="clear"></div>
+
+	<div class="button">
+		<button>Save</button>
+	<div>
+		
+
+	</div>
+			
+	</div>
+	
+</div>

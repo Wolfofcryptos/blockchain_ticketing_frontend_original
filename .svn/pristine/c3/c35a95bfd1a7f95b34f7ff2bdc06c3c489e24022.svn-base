@@ -1,0 +1,76 @@
+<!-- <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog"> -->
+    <div class="readmore-popup">
+      <!-- Modal content-->
+      <div class="modal-content fp-modal-content">
+        <div class="modal-header fp-modal-header">
+          <button type="button" class="close" data-dismiss="modal" ng-click="cancel()"><span class="fp-icon icon-fp-icon-cancel"></span></button>
+          <h4 class="modal-title fp-modal-title">Edit</h4>
+        </div>
+        <div class="modal-body fp-modal-body">
+	<div class="fp-modal-box" >
+	<!-- .info-box-content -->
+	<div class="modal-box-content-edit">
+  <!-- <div class="sam">
+    <md-input-container>
+  <label>Report Description:</label>
+  <textarea >{{editdesc}}</textarea>
+  </md-input-container>
+  </div> -->
+  
+  <div class="edit-inner"  ng-show="currentState=='Report'">
+  <label>Report Name :</label>
+  <input type='text' name='reportTitle' ng-model='editname'>
+   <div class="clear"></div>
+  <span style="display:block;text-align:right;padding:0 13px 0 5px;font-size:11px;color:#AAA;">({{editname.length}}/25)</span>
+ <div class="clear"></div>
+  </div>
+   <div class="edit-inner" ng-show="currentState=='Category'">
+  <label>Category Name :</label>
+  <input type='text' name='reportTitle' ng-model='editCatname'>
+   <div class="clear"></div>
+  </div>
+   <div class="edit-inner" ng-show="currentState=='Category'">
+  <label>Category Code :</label>
+  <input type='text' name='reportTitle' ng-model='editCatcode'>
+   <div class="clear"></div>
+  </div>
+
+  <div class="edit-inner" ng-show="currentState=='Report'">
+  <label>Report Url :</label><input type='text' name='reportUrl' ng-model='editurl'>
+</div>
+ <div class="edit-inner" ng-show="currentState=='Report'">
+  <label>Report Description :</label><textarea ng-model='editdesc'></textarea>
+</div>
+ <div class="edit-inner">
+  
+  <label>Image Icon :</label>
+<button progress-button="progressFunction()" pb-direction="vertical"></button>
+  <input type="file"  file-model="filename">
+</div>
+   <div class="edit-inner" ng-show="currentState=='Report'">
+  <label>Report Document Url :</label><input type='text' name='reportDocUrl' ng-model='editdocurl'>
+</div>
+ <div class="edit-inner" ng-show="currentState=='Report'">
+  <label>Report Video Url :</label><input type='text' name='reportVideoUrl' ng-model='editvideourl'>
+</div>
+ <div class="edit-inner" ng-show="currentState=='Report'">
+  <label>Report Mobile Url :</label><input type='text' name='reportMobileUrl' ng-model='editMobileurl'>
+</div>
+	</div>
+	<!-- /.info-box-content -->
+	</div>
+        </div>
+        <div class="modal-footer fp-modal-footer">
+            <button type="submit" class="btn btn-primary" ng-click="editSave()"> 
+            <span ng-show="searchButtonText == 'Searching'"><i class="glyphicon glyphicon-repeat fast-right-spinner"></i></span>
+          Save
+        </button>
+         <!--  <button type="button" class="btn btn-launch" data-dismiss="modal"  ng-click="editSave"><a>Save</a></button> -->
+        </div>
+      </div>
+      
+   </div>
+  <!--</div> -->
+
+   <!-- ng-show="isVisibleList == 'loader'" -->

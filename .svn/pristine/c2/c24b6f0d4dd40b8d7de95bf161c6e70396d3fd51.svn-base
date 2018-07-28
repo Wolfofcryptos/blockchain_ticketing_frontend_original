@@ -1,0 +1,243 @@
+/*
+
+
+
+*/
+
+var reportMainController = pulseapp.controller('reportMainController', function ($scope, $rootScope,PulseData,ngProgressFactory,$window,$mdDialog,fileUpload,$mdToast,$state) {
+
+	//variables
+	$scope.reportDetails=[];
+	//$scope.categoryTitle='';
+
+console.log($window.document.activeElement);
+if($window.document.activeElement != null){
+	$window.document.activeElement.blur();
+}else{
+
+	console.log("bai");
+}
+//$window.document.activeElement.blur();
+	$scope.reportDetailList= function() {
+			
+			$scope.isVisibleList='loader';
+			console.log("Hello"+$rootScope.categoryId)
+			$scope.requestType="getReportDetails";
+			$scope.requestParam={category_id :$rootScope.categoryId,adid:$rootScope.userId};
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessReportDetailList,$scope.OnfailureReportDetailList)
+
+	}
+
+	$scope.OnSuccessReportDetailList = function(response) {
+
+		$scope.progressbar.complete();
+		$scope.reportDetails=response.data.files;
+		$scope.isVisibleList='list';
+
+
+	}
+	$scope.OnfailureReportDetailList=function(response){
+
+			$scope.progressbar.complete();
+			console.log("Report Details HTTP Fail");
+	}
+
+
+	$rootScope.$on("CallParentMethod", function(events,categoryid,categoryName,categoryIconUrl){
+		$rootScope.categoryId=categoryid;
+		PulseData.setCategoryTitle(categoryName);
+		PulseData.setCategoryIcon(categoryIconUrl);
+		//$rootScope.categoryTitle=categoryName;
+        $scope.reportDetailList();
+        });
+
+	 $rootScope.$on("dialogClose", function(){
+
+	 	$scope.reportDetailList();
+	 });
+
+	 $rootScope.$on("reload-report", function(){
+	 	
+	 	$scope.reportDetailList();
+	 });
+
+	$scope.favouriteAdd = function (event,listval){
+
+		$scope.progressbar.start();
+		$scope.requestParam={category_id :$rootScope.categoryId,report_id : listval.report_id, adid: $rootScope.userId};
+		if($(event.target).hasClass('active-fav')){
+			$scope.requestType="deleteFav";
+			//$scope.requestParam={fav_id:listval.fav_id};
+			$(event.target).removeClass('active-fav');
+			console.log("removed")
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessDelFavourties,$scope.OnfailureDelFavourites);
+
+
+		}else{
+
+		console.log(listval.report_id,$rootScope.categoryId,$rootScope.userId);
+		console.log("added")
+		$scope.requestType="addFav";
+
+
+		PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessAddFavourties,$scope.OnfailureAddFavourites);
+		$(event.target).addClass('active-fav');
+
+
+		}
+
+	}
+
+	$scope.OnSuccessAddFavourties = function (response){
+		$scope.progressbar.complete();
+		console.log("favourites"+response)
+
+
+	}
+	$scope.OnfailureAddFavourites = function (response){
+
+
+		$scope.progressbar.complete();
+		console.log("favourites Add failed");
+	}
+
+	$scope.OnSuccessDelFavourties = function (response){
+
+		console.log("favourite Delete success")
+		$scope.progressbar.complete();
+
+
+
+
+	}
+	$scope.OnfailureDelFavourites = function (response){
+
+		console.log("favourites Delete failed");
+		$scope.progressbar.complete();
+	}
+
+	$scope.tracker = function(x){
+
+		console.log("called");
+		$scope.requestParam={user_id:sessionStorage.getItem("P_user"),App_id:1,Region:sessionStorage.getItem("P_user_region"),mod_id:x.report_id};
+		$scope.requestType='viewsCount';
+		PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessViewsCount,$scope.OnfailureViewsCount);
+	}
+
+	$scope.OnSuccessViewsCount = function(response){
+
+		console.log(response.data);
+
+	}
+	$scope.OnfailureViewsCount = function(){
+
+		console.log("failure viewscount");
+	}
+
+
+
+	   $scope.showAdvanced = function(ev,x) {
+    $mdDialog.show({
+
+      templateUrl: 'templates/ReadMore.html',
+      controller: readmoreController,
+      parent: angular.element(document.body),
+      locals:{item:x},
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+    })
+  };
+
+   function readmoreController($scope, $mdDialog,item) {
+ 	console.log(item);
+ 	$scope.description_readmore=item.report_description;
+ 	$scope.title_readmore=item.report_title;
+ 	$scope.url_readmore=item.report_url;
+ 	$scope.imgurl_readmore=item.report_icon_url;
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+}
+
+	$scope.checkDescription = function(desc){
+
+		if (desc.length > 66) {
+   return false;
+  }
+  else {
+   return true;
+  }
+
+	}
+
+
+	  $scope.edcon = function(ev,x) {
+    $mdDialog.show({
+
+      templateUrl: 'templates/Edit.html',
+    controller: 'editController',
+      parent: angular.element(document.body),
+      locals:{item:x},
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+    })
+  };
+
+
+
+
+  $scope.delete = function(ev,x) {
+  	$rootScope.delVal='Report';
+    $mdDialog.show({
+
+      templateUrl: 'templates/Delete.html',
+      controller: 'deleteController',
+      parent: angular.element(document.body),
+      locals:{item:x},
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+    })
+  };
+
+
+   $scope.showActionToast = function() {
+    var toast = $mdToast.simple()
+      .textContent('Delete is Called')
+      .action('UNDO')
+      .highlightAction(true)
+      .highlightClass('md-accent')// Accent is used by default, this just demonstrates the usage.
+      .position('top right');
+
+    $mdToast.show(toast).then(function(response) {
+      if ( response == 'ok' ) {
+        alert('You clicked the \'UNDO\' action.');
+      }
+    });
+  };
+
+ 
+
+
+
+	$scope.init= function() {
+		console.log('cal')
+
+			if(sessionStorage.getItem("P_user")){
+
+$scope.reportDetailList();
+			}else{
+$state.go('login');
+
+			}
+
+
+
+	}
+	$scope.init();
+
+
+
+});

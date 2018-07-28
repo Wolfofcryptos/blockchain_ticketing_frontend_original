@@ -1,0 +1,25 @@
+/*
+File Name : FileUpload.js
+Absolute Path : js/services/FileUpload.js
+Author : Flex , Emergining Technologies
+Created Date : 08/Nov/2016
+Functions :
+*/
+
+pulseapp.service('fileUpload', ['$http', function ($http) {
+        this.uploadFileToUrl = function(file, uploadUrl){
+           var fd = new FormData();
+           fd.append('file', file);
+
+           $http.post(uploadUrl, fd, {
+              transformRequest: angular.identity,
+              headers: {'Content-Type': undefined}
+           })
+
+           .success(function(){
+           })
+
+           .error(function(){
+           });
+        }
+     }]);

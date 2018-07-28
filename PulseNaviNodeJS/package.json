@@ -1,0 +1,22 @@
+{
+  "name": "pulsenavigation",
+  "version": "1.0.0",
+  "description": "\"\"\u001b[DPulse Navigation App \"\u001b[\u001b[3~\u001b[C\u001b[C",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Emerging Technologies",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "*",
+    "diet": "^0.10.8",
+    "express": "*",
+    "seriate": "^0.8.0",
+	   "http": "0.0.0",
+    "multer": "^1.1.0",
+    "path": "^0.12.7",
+    "cors":"*",
+    "serve-static":"*"
+  }
+}

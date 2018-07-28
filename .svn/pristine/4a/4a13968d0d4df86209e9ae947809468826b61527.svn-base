@@ -1,0 +1,94 @@
+/*
+
+
+
+*/
+
+var reportMainController = pulseapp.controller('reportMainController', function ($scope, $rootScope,PulseData) {
+
+	//variables
+	$scope.reportDetails=[];
+	//$scope.categoryTitle='';
+
+
+	$scope.reportDetailList= function() {
+			$scope.isVisibleList='loader';
+			console.log("Hello"+$rootScope.categoryId)
+			$scope.requestType="getReportDetails";
+			$scope.requestParam={category_id :$rootScope.categoryId};
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessReportDetailList,$scope.OnfailureReportDetailList)
+
+	}
+
+	$scope.OnSuccessReportDetailList = function(response) {
+		
+		
+		$scope.reportDetails=response.data.files;
+		$scope.isVisibleList='list';
+
+
+	}
+	$scope.OnfailureReportDetailList=function(response){
+
+		console.log("Report Details HTTP Fail");
+	}
+
+
+	$rootScope.$on("CallParentMethod", function(events,categoryid,categoryName){
+		$rootScope.categoryId=categoryid;
+		PulseData.setCategoryTitle(categoryName);
+		//$rootScope.categoryTitle=categoryName;
+        $scope.reportDetailList();
+        });
+	
+	$scope.favouriteAdd = function (event,listval){
+		$scope.requestParam={category_id :$rootScope.categoryId,report_id : listval.report_id, adid: $rootScope.userId};
+		if($(event.target).hasClass('active-fav')){
+			$scope.requestType="deleteFav";
+			
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessDelFavourties,$scope.OnfailureDelFavourites);
+			$(event.target).removeClass('active-fav');
+			
+		}else{
+			
+		console.log(listval.report_id,$rootScope.categoryId,$rootScope.userId);
+		
+		$scope.requestType="addFav";
+		
+		
+		PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessAddFavourties,$scope.OnfailureAddFavourites);
+		$(event.target).addClass('active-fav');
+		
+		
+		}
+	
+	}
+	
+	$scope.OnSuccessAddFavourties = function (response){
+		console.log("favourites"+response)
+		
+	}
+	$scope.OnfailureAddFavourites = function (response){
+		
+		console.log("favourites Add failed");
+	}
+	
+	$scope.OnSuccessDelFavourties = function (response){
+		console.log("favourite Delete success")
+		
+	}
+	$scope.OnfailureDelFavourites = function (response){
+		
+		console.log("favourites Delete failed");
+	}
+	
+	$scope.init= function() {
+
+		$scope.reportDetailList();
+		
+	}
+	$scope.init();
+
+
+
+});

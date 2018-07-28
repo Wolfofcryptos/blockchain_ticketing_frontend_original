@@ -1,0 +1,77 @@
+<div class="fp-content">
+	<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 fp-panel">
+							<div class="content-wrapper">
+									<div class="content-header">
+										<h3 ng-hide="userStatus=='Admin'" class="content-title pull-left">
+											Tickets
+										</h3>
+										
+										<select class="ticketsdrowpdown" ng-change="change(myval)"  ng-model="myval" data-ng-options="x as x.event_name for x in eventList"  ng-show="userStatus=='Admin'">
+											<option value="">Select Event</option>
+										</select>	
+
+										<!-- <button ng-show="userStatus=='Admin'" ng-click="add($event)" class="btn btn-content-add pull-right"><span class="icon-fp-icon-add"> Add</span></button> -->
+										<div class="clearfix"></div>
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+		  <!-- <div id="spinner" class="loader_img"  ng-show="isVisibleList == 'loader'"><img src="images/loader.gif" > 
+		  </div> -->
+			<div   class= "col-sm-6 col-xs-12 col-md-4 col-lg-3 fp-panel" ng-repeat="x in ticketList" >
+				<div class="box" >
+					<div class="box-body">
+						<a href="#" target="_blank" class="linksdecor">
+									<div class="info-box">
+									<span class="info-box-icon">
+										<img src="images/events.jpg">
+									</span>
+									<!-- .info-box-content -->
+									<!-- <div class="info-box-content">
+									  <span>{{x.report_description}} </span>
+									</div> -->
+									<!-- /.info-box-content -->
+								  </div>
+								  </a>
+								 
+					</div>
+					<div class="box-header">
+						<div class="box-title-wrap">
+						<h3 class="box-title">{{x.eventName}}</h3>
+						</div>
+								<!-- box-tools -->
+							 <div class="box-tools pull-right linksdecor" >
+									
+									 <div class="read-box">
+									<button type="button" ng-click="details($event,x)" class="btn btn-more more-active" ng-class="{'btn btn-more': disabled}">Details</button>
+									</div>
+								  </div>
+							  <!-- /.box-tools -->
+					</div>
+					
+					 <div class="box-footer" ng-show="userStatus=='Admin'">
+									<ul class="nav nav-pills nav-justified">
+										<li ng-click="edcon($event,x)"><a><span class="fp-icon icon-fp-icon-edit"></span> Edit</a></li>
+										<li ng-click="delete($event,x)"><a><span class="fp-icon icon-fp-icon-delete"></span> Delete</a></li>
+									</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<!-- <ul>
+<li ng-repeat="x in linkList">
+{{x.report_title}}
+</li>
+</ul> -->

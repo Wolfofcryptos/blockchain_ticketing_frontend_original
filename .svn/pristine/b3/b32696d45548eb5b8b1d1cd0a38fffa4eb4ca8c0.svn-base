@@ -1,0 +1,173 @@
+ var editController = pulseapp.controller('editController', function ($scope, $rootScope,PulseData,ngProgressFactory,$window,$mdDialog,fileUpload,$mdToast,item,$q,$timeout,$interval,value) {
+    	
+  	
+  	console.log(value);
+    $scope.typeValue=value;
+    if(value=='Report'){
+
+    $scope.addName=item.report_title;
+    $scope.addUrl=item.report_url;
+    $scope.addDesc=item.report_description;
+    $scope.addDocurl=item.training_doc_url;
+    $scope.addVideourl=item.training_video_url;
+    $scope.iconurl=item.report_icon_url;
+    $scope.addMobileurl=item.mobile_url;
+        
+
+
+
+    }else if(value=='Category'){
+
+       $scope.addCatName=item.category_name;
+       $scope.addCatCode=item.category_code;
+       $scope.iconurl=item.category_icon_url;
+         
+
+
+    }
+   
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+$scope.produceErrors = false;
+    $scope.progressFunction = function() {
+
+
+					var file = $scope.filename;
+          if($scope.typeValue=='Category'){
+          var method='savedata';  
+          }
+          else if($scope.typeValue=='Report'){
+          var method='savedataReportIcons';  
+          }
+
+           			fileUpload.uploadFileToUrl(file,method).then(function(data){
+
+           					console.log(data);
+           					console.log($scope.editname);
+           					console.log(data.object.filename);
+           					$scope.iconurl=data.object.filename;
+           					$scope.produceErrors = false;
+           			
+           			},function(data){
+
+
+           				console.log(data);
+           				$scope.produceErrors = true;
+
+           			});
+
+                    return $q(function(resolve, reject) {
+                        $timeout(function() {
+                            !$scope.produceErrors ? resolve() : reject();
+                        }, 1500);
+                    });
+                };
+
+
+     $scope.$watch('editname', function (newValue, oldValue) {
+				if (newValue) {
+					if (newValue.length > 25) {
+					  $scope.editname = oldValue;
+					}
+					$scope.commentLength = 25 - newValue.length;
+				}
+			});
+
+     
+
+     $scope.addSave = function(){
+
+      if(value=='Report'){
+
+        $scope.searchButtonText = "Searching";
+      if($scope.addDocurl== '' ){
+        $scope.addDocurl_rep=null;
+      }else{
+          $scope.addDocurl_rep=$scope.addDocurl;
+      }
+       if($scope.addVideourl== '' ){
+         $scope.addVideourl_rep=null;
+      }else{
+         $scope.addVideourl_rep= $scope.addVideourl;
+      }
+        if($scope.addMobileurl== '' ){
+         $scope.addMobileurl_rep=null;
+      }else{
+         $scope.addMobileurl_rep= $scope.addMobileurl;
+      }
+
+
+      $scope.requestParam={report_title:$scope.addName,report_url:$scope.addUrl,report_desc:$scope.addDesc,icon_url:$scope.iconurl,user_id:sessionStorage.getItem("P_user"),doc_url: $scope.addDocurl_rep,video_url:$scope.addVideourl_rep,mobile_url:$scope.addMobileurl_rep,report_id:item.report_id};
+    $scope.requestType='editReport';
+    PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessEditSave,$scope.OnfailureEditSave);
+
+
+      }else if(value=='Category'){
+
+         $scope.searchButtonText = "Searching";
+
+
+         $scope.requestParam={category_name:$scope.addCatName,icon_url:$scope.iconurl,user_id:sessionStorage.getItem("P_user"),category_code: $scope.addCatCode,category_id:item.category_id};
+    $scope.requestType='editCategory';
+    PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessEditCatSave,$scope.OnfailureEditCatSave);
+
+
+      }
+
+
+
+     }
+
+
+	$scope.OnSuccessEditSave = function(response){
+
+		console.log(response.data);
+    $scope.searchButtonText = "Search";
+    $scope.showSimpleToast('Saved Successfully!');
+    $mdDialog.cancel();
+    $rootScope.$emit("dialogClose");
+
+
+	}
+
+	$scope.OnfailureEditSave = function(){
+
+		  console.log("failure Edit Save");
+      $scope.searchButtonText = "Search";
+      $scope.showSimpleToast('Edit Failed!');
+	}
+
+
+  $scope.OnSuccessEditCatSave = function(response){
+
+    console.log(response.data);
+    $scope.searchButtonText = "Search";
+    $scope.showSimpleToast('Saved Successfully!');
+    $mdDialog.cancel();
+    $rootScope.$emit("reload");
+
+
+  }
+
+    $scope.OnfailureEditCatSave = function(){
+
+      console.log("failure Edit Save");
+      $scope.searchButtonText = "Search";
+      $scope.showSimpleToast('Edit Failed!');
+  }
+
+ 
+   $scope.showSimpleToast = function(text) {
+   // var pinTo = $scope.getToastPosition();
+
+    $mdToast.show(
+      $mdToast.simple()
+        .textContent(text)
+        .position('top right')
+        .hideDelay(3000)
+    );
+  };
+
+
+});

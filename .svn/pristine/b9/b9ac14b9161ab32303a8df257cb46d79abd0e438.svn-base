@@ -1,0 +1,71 @@
+<div class="fp-content">
+	<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 fp-panel">
+							<div class="content-wrapper">
+									<div class="content-header">
+										<img src="images/sideicon/icon1.png" class="content-image" alt="content-icon">
+										<h3 class="content-title pull-left">
+											{{categoryTitle}}
+										</h3>
+
+										<button ng-show="userStatus=='Admin'" class="btn btn-content-add pull-right"><span class="icon-fp-icon-add"> Add</span></button>
+										<div class="clearfix"></div>
+									</div>
+							</div>
+						</div>
+					</div>
+				</div>
+	
+	<div class="container-fluid">
+		<div class="row">
+		  <!-- <div id="spinner" class="loader_img"  ng-show="isVisibleList == 'loader'"><img src="images/loader.gif" > 
+		  </div> -->
+			<div ng-show="isVisibleList == 'list'" ng-repeat="x in linkList" class= "col-sm-6 col-xs-12 col-md-4 col-lg-3 fp-panel">
+				<div class="box">
+					<div class="box-header">
+					<div class="box-title-wrap">
+						<h3 class="box-title">{{x.report_title}}</h3>
+						</div>
+								<!-- box-tools -->
+							<div class="box-tools pull-right">
+									<!-- <button type="button" class="btn btn-box-tool" ><span class="fp-icon icon-fp-icon-doc"></span></button>
+									<button type="button" class="btn btn-box-tool" ><span class="fp-icon icon-fp-icon-play"></span></button> -->
+									<button ng-click="favouriteAdd($event,x)" type="button" class="btn btn-box-tool" ><span  class="fp-icon icon-fp-icon-fav" ng-class="{'active-fav': x.Fav == 1}" ></span></button>
+							</div>
+							  <!-- /.box-tools -->
+					</div>
+					<div class="box-body">
+					<a href={{x.report_url}} target="_blank" class="linksdecor">
+									<div class="info-box">
+									<span class="info-box-icon">
+										<img src="{{x.report_icon_url}}">
+									</span>
+									<!-- .info-box-content -->
+									<div class="info-box-content">
+									  <span>{{x.report_description}}</span>
+									</div>
+									<!-- /.info-box-content -->
+								  </div>
+								  </a>
+					</div>
+					<div class="box-footer" ng-show="userStatus=='Admin'">
+									<ul class="nav nav-pills nav-justified">
+										<li><a href="#"><span class="fp-icon icon-fp-icon-edit"></span> Edit</a></li>
+										<li><a href="#"><span class="fp-icon icon-fp-icon-delete"></span> Delete</a></li>
+									</ul>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<!-- <ul>
+<li ng-repeat="x in linkList">
+{{x.report_title}}
+</li>
+</ul> -->

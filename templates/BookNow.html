@@ -1,0 +1,39 @@
+
+    <div class="readmore-popup" >
+
+      <div class="modal-content fp-modal-content">
+        <div class="modal-header fp-modal-header">
+          <button type="button" class="close" data-dismiss="modal" ng-click="cancel()"><span class="fp-icon icon-fp-icon-cancel"></span></button>
+          <h4 class="modal-title fp-modal-title">{{eventName}}</h4>
+        </div>
+        <div class="modal-body fp-modal-body">
+	<div class="fp-modal-box">
+	
+
+	<div class="eventDesc" >
+
+	<label>Description:</label>
+  <div class="values">{{eventDesc}}</div>
+  <div class="clear"></div>
+  <label>Venue:</label>
+  <div class="values">{{eventVenue}}</div>
+   <div class="clear"></div>
+  <label>Price:</label>
+  <div class="values">{{eventPrice}}</div>
+   <div class="clear"></div>
+  <label ng-show="adminchk=='Admin'">Available Tickets:</label>
+  <div ng-show="adminchk=='Admin'" class="values">{{ticketCount}}</div>
+	</div>
+	
+	</div>
+
+
+      
+        
+        <div class="modal-footer fp-modal-footer" ng-hide="adminchk=='Admin'">
+          <button type="button" class="btn btn-launch"   ng-click="bookTickets()" data-dismiss="modal"><a>{{ctltext}}</a></button>
+        </div>
+      </div>
+      
+   </div> 
+ </div>

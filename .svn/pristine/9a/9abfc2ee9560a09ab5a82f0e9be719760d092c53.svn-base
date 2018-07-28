@@ -1,0 +1,39 @@
+/*
+File Name : app.js
+Absolute Path : js
+Author : Flex , Emergining Technologies
+Created Date : 29/Sep/2016
+*/
+
+var pulseapp = angular.module("pulse", ['ngRoute']);
+
+pulseapp.config(['$routeProvider', function ($routeProvider){
+	
+	$routeProvider
+		.when('/',{
+            title: 'Reports',        
+			templateUrl : 'templates/ReportList.html',
+			controller:'pulseMainController'
+		})
+		
+		.when('/links',{
+            title: 'Links',        
+			templateUrl : 'templates/LinksList.html',
+			controller:'linkController'
+		})
+		
+		.when('/favourites',{
+            title: 'Links',        
+			templateUrl : 'templates/FavouritesList.html',
+			controller:'favouritesController'
+		})
+		
+		.when('/requestaccess',{
+            title: 'Links',        
+			templateUrl : 'templates/ReportAccessTab.html',
+			controller:'requestaccessController'
+		})
+		
+	
+	}
+]);

@@ -1,0 +1,143 @@
+/*
+File Name : app.js
+Absolute Path : js
+Author : Flex , Emergining Technologies
+Created Date : 29/Sep/2016
+*/
+
+var pulseapp = angular.module("pulse", ['ngAnimate','ui.router','ngProgress','angular-file-upload','ngScrollbars','ngMaterial', 'ngMessages', 'material.svgAssetsCache']);
+
+pulseapp.config( function ($stateProvider, $urlRouterProvider,$compileProvider,ScrollBarsProvider){
+
+
+	$stateProvider
+
+      .state('login', {
+      url: '/',
+      templateUrl: 'login.html',
+      controller:'loginController'
+    })
+
+      .state('home', {
+      url: '/home',
+      views: {
+          'Content': {
+          templateUrl: 'templates/main.html',
+
+          }
+      }
+  })
+
+	.state('home.report',{
+	url: '/report',
+	views:{
+		'subview':{
+	templateUrl : 'templates/ReportList.html',
+	controller:'reportMainController'
+
+		}
+	}
+
+	})
+
+	.state('home.links',{
+			url: '/links',
+           views:{
+		'subview':{
+			templateUrl : 'templates/LinksList.html',
+			controller:'linkController'
+		}
+	}
+		})
+
+		.state('home.favourites',{
+
+          url: '/favourites',
+           views:{
+		'subview':{
+			templateUrl : 'templates/FavouritesList.html',
+			controller:'favouritesController'
+
+		}}
+
+		})
+
+		// .when('/requestaccess',{
+  //           title: 'Request Access',
+		// 	templateUrl : 'templates/ReportAccessTab.html',
+		// 	controller:'requestaccessController'
+		// })
+
+		$urlRouterProvider.otherwise('/');
+		$compileProvider.debugInfoEnabled(false);
+
+		// scrollbar defaults
+					ScrollBarsProvider.defaults = {
+						autoHideScrollbar: true,
+						//setHeight: 500,
+						scrollInertia: 0,
+						axis: 'yx',
+						advanced: {
+							updateOnContentResize: true
+						},
+						scrollButtons: {
+							scrollAmount: 'auto', // scroll amount when button pressed
+							enable: false // enable scrolling buttons by default
+						}
+					};
+
+
+	}
+);
+
+pulseapp.run(['$rootScope', function($rootScope) {
+    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+	//	$rootScope.loginDisplay=current.$$route.loginDisplay;
+
+    });
+}]);
+
+pulseapp.filter('unique', function() {
+   return function(collection, keyname) {
+      var output = [],
+          keys = [];
+
+      angular.forEach(collection, function(item) {
+          var key = item[keyname];
+          if(keys.indexOf(key) === -1) {
+              keys.push(key);
+              output.push(item);
+          }
+      });
+      return output;
+
+   };
+});
+
+
+pulseapp.directive('blur', [function () {
+    return {
+        restrict: 'A',
+        link: function (scope, element) {
+            element.on('click', function () {
+                element.blur();
+            });
+        }
+    };
+}]);
+// pulseapp.directive('mainArea', function() {
+//     return {
+//         restrict: "E",
+//         template: "<div>"+
+//             "<div id='mainDiv'> </div>" +
+//             "<button data-ng-click='append()'>Add</button>" +
+//         "</div>",
+//         controller: function($scope, $element, $attrs) {
+//             $scope.append = function() {
+//                 var p = angular.element("<p />");
+//                 p.text("Appended");
+//                 $element.find("div").append(p);
+//             }
+//         }
+//     }
+// });

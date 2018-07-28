@@ -1,0 +1,73 @@
+var db = require('seriate');
+
+
+
+// SQL Server and database config
+var config = {
+
+	   "Driver":"SQL Server Native Client 11.0",
+     "server": "GSSNTE808.asia.ad.flextronics.com",
+      "user": "mobileux_coe",
+	   "port":"1433",
+     "password": "mobile@432",
+     "database": "pulsenavigation",
+
+	options: {
+        encrypt: true // Use this if you're on Windows Azure
+    }
+};
+
+
+db.setDefaultConfig( config );
+db.stream = true;
+
+
+
+// Get Category list
+exports.getCategory =  function(req,res){
+			db.execute( {
+						query: "SELECT * FROM [pulsenavigation].[dbo].[category] where flag='Y' and category_type=@categoryType",
+						params: {
+			            categoryType: {
+			                type: db.NVARCHAR,
+			                val: req.param('category_type')
+			            }
+			        }
+				} ).then(function(results){
+					res.send({'files':results});
+				}, function( err ) {
+						console.log( "Something bad happened:", err );
+				} );
+
+};
+
+//Get Report Details
+exports.getReportDetails = function(req,res){
+	db.execute( {
+				query: "SELECT [report_id]   ,[report_title]  ,[report_description]      ,[category_id]  FROM [pulsenavigation].[dbo].[report_detail] where flag='Y' and category_id=@categoryId",
+				params: {
+							categoryId: {
+									type: db.NVARCHAR,
+									val: req.param('category_id')
+							}
+					}
+		} ).then(function(results){
+			res.send({'files':results});
+		}, function( err ) {
+				console.log( "Something bad happened:", err );
+		} );
+
+}
+
+//Get Favourites listen
+exports.getFavourites = function(req,res){
+	db.execute( {
+				query: "SELECT rep.report_id,rep.report_title,cat.category_id,category_name,cat.category_type FROM dbo.report_detail rep INNER JOIN dbo.favourites fav ON rep.report_id=fav.report_id INNER JOIN dbo.category cat on cat.category_id = rep.category_id",
+
+		} ).then(function(results){
+			res.send({'files':results});
+		}, function( err ) {
+				console.log( "Something bad happened:", err );
+		} );
+
+}

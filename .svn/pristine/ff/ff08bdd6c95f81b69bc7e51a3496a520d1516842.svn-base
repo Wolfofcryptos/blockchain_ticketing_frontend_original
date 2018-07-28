@@ -1,0 +1,166 @@
+
+var pulseController = pulseapp.controller('pulseController', function ($rootScope,$scope,$state,PulseData,$animate,ngProgressFactory,fileUpload) {
+
+		$rootScope.userId=sessionStorage.getItem("P_user");
+		$scope.username=sessionStorage.getItem("P_user_name");
+		$scope.Status=sessionStorage.getItem("State");
+		$rootScope.categoryId=sessionStorage.getItem("P_cat_id");
+		$rootScope.ActionTracker=[{'categoryId':18},{'category_name':'Action Tracker'},{'category_type':'Action'},{'category_icon_url':'http://mobileserver.flextronics.com/pulsenavigation/images/sideicons/action_tracker.png'}];
+		$scope.categoryList = [];
+		$scope.reportDisplay;
+		$rootScope.userStatus="Normal";
+		$scope.favDisplay;
+		$scope.customFullscreen = false;
+		$rootScope.categoryIcon='http://mobileserver.flextronics.com/pulsenavigation/images/sideicons/demand.png';
+
+		$rootScope.favouriteFilter='';
+		$scope.tab;
+
+		$scope.reportlist = function (categoryType){
+
+			if(categoryType== null || categoryType== 'null'){
+				categoryType='report';
+			}
+
+
+			$scope.scrollbarConfig = {
+							theme: 'dark',
+							scrollInertia: 500
+						}
+				sessionStorage.setItem("State",categoryType);
+				$scope.tab = categoryType;
+	$scope.categoryList = [];
+			$rootScope.favouriteList=[];
+
+				switch (categoryType) {
+						case 'report':
+
+							$scope.requestParam={category_type :'report'};
+							$scope.reportDisplay=true;
+							$scope.requestType="getCategory";
+							PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessReportlist,$scope.OnfailureReportlist)
+
+							break;
+						case 'links':
+
+							$scope.requestParam={category_type :'common'};
+							$scope.requestType="getCategory";
+							PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessReportlist,$scope.OnfailureReportlist)
+							$scope.reportDisplay=true;
+
+							break;
+						case 'favourites':
+
+							//$scope.requestParam={category_type :'common'};
+							$rootScope.favouriteFilter='';
+							$scope.reportDisplay=false;
+							$state.go('home.'+$scope.tab);
+							break;
+						default:
+
+				}
+		}
+
+		$scope.fileUploadMethod = function(e){
+				var file = $scope.myFile;
+           var uploadUrl = "http://mobileserver.flextronics.com:3006/savedata";
+           fileUpload.uploadFileToUrl(file, uploadUrl);
+		}
+
+
+
+
+		$scope.OnSuccessReportlist = function(response) {
+
+
+			$scope.categoryList=response.data.files;
+			$rootScope.categoryId=response.data.files[0].category_id;
+			PulseData.setCatId(response.data.files[0].category_id);
+			PulseData.setCategoryTitle(response.data.files[0].category_name);
+			PulseData.setCategoryIcon(response.data.files[0].category_icon_url);
+		 	$scope.progressbar.complete();
+		 	$state.go('home.'+$scope.tab);
+			//window.location.hash="/"+$scope.tab;
+
+		}
+
+		$scope.OnfailureReportlist = function(response) {
+
+			console.log("Category List HTTP Fail");
+			$scope.progressbar.complete();
+
+		}
+
+		$scope.categoryListClick = function(categoryId,categoryName,categoryIconUrl) {
+
+			 $scope.progressbar.start();
+		//	 PulseData.setCatId(categoryId);
+			 $rootScope.$emit("CallParentMethod",categoryId,categoryName,categoryIconUrl);
+		}
+
+		$scope.favFilter = function(x){
+
+			//$rootScope.favAnime=false;
+			$rootScope.favouriteFilter=x.category_id;
+			PulseData.setCategoryTitle(x.category_name);
+			PulseData.setCategoryIcon(x.category_icon_url);
+			console.log($rootScope.favAnime);
+
+		}
+
+		$scope.emptyChange = function (){
+		//	$rootScope.favAnime=false;
+			PulseData.setFavouriteFilter('');
+			PulseData.setCategoryTitle("All");
+			PulseData.setCategoryIcon("images/sideicon/icon1.png");
+			console.log($rootScope.favAnime);
+		}
+
+
+	  $scope.logout = function(){
+
+	  	sessionStorage.clear();
+	  	$state.go('login');
+	  }
+
+	 //   $scope.showAdvanced = function(ev) {
+  //   $mdDialog.show({
+  //     templateUrl: 'templates/popup.html',
+  //     parent: angular.element(document.body),
+  //     targetEvent: ev,
+  //     clickOutsideToClose:true,
+  //     fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+  //   })
+  //   .then(function(answer) {
+  //     $scope.status = 'You said the information was "' + answer + '".';
+  //   }, function() {
+  //     $scope.status = 'You cancelled the dialog.';
+  //   });
+  // };
+
+
+		$scope.init= function() {
+
+			if(sessionStorage.getItem("P_user")){
+
+ 			$scope.progressbar = ngProgressFactory.createInstance();
+        	$scope.progressbar.start();
+			$scope.reportlist($scope.Status);
+
+			}else{
+
+				$state.go('login');
+
+			}
+
+		
+		//$scope.reportlist('report');
+
+	}
+
+
+	$scope.init();
+
+
+
+});

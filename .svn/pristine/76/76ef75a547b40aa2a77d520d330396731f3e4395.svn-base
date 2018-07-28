@@ -1,0 +1,34 @@
+//import dependencies
+var express = require('express');
+var app = express();
+var bodyParser = require('body-parser');
+var  services = require('./services');
+var path = require('path');
+var http = require('http');
+var multer  = require('multer');
+
+
+
+var storage = multer.diskStorage({
+  destination: 'http://mobileserver.flextronics.com/PulseNavigation/images/reporticon/',
+  filename: function (req, file, cb) {
+    cb(null, file.originalname.replace(path.extname(file.originalname), "") + '-' + Date.now() + path.extname(file.originalname))
+
+  }
+})
+
+var upload = multer({ storage: storage })
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+app.get('/getCategory',services.getCategory);
+app.get('/getReportDetails',services.getReportDetails);
+app.get('/getFavourites',services.getFavourites);
+app.post('/savedata', upload.single('file'), function(req,res,next){
+  res.send('Uploade Successful ', req.file, req.body);
+});
+app.listen(3001);
+console.log('Running on port 3001');

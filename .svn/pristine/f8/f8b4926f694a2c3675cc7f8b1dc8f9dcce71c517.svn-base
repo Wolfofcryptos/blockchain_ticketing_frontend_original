@@ -1,0 +1,98 @@
+/*
+File Name : app.js
+Absolute Path : js
+Author : Flex , Emergining Technologies
+Created Date : 29/Sep/2016
+*/
+
+var pulseapp = angular.module("pulse", ['ngAnimate','ui.router','ngProgress','ngCookies']);
+
+pulseapp.config( function ($stateProvider, $urlRouterProvider){
+
+	$stateProvider
+
+      .state('login', {
+      url: '/login',
+      templateUrl: 'login.html',
+      controller:'loginController'
+    })
+
+      .state('home', {
+      url: '/home',
+      views: {
+          'Content': {
+          templateUrl: 'templates/main.html',
+
+          }
+      }
+  })
+
+	.state('home.report',{
+	url: '/report',
+	views:{
+		'subview':{
+	templateUrl : 'templates/ReportList.html',
+	controller:'reportMainController'
+
+		}
+	}   
+	
+	})
+		
+	.state('home.links',{
+			url: '/links',
+           views:{
+		'subview':{
+			templateUrl : 'templates/LinksList.html',
+			controller:'linkController'
+		}
+	}
+		})
+
+		.state('home.favourites',{
+
+          url: '/favourites',
+           views:{
+		'subview':{
+			templateUrl : 'templates/FavouritesList.html',
+			controller:'favouritesController'
+
+		}}
+			
+		})
+
+		// .when('/requestaccess',{
+  //           title: 'Request Access',
+		// 	templateUrl : 'templates/ReportAccessTab.html',
+		// 	controller:'requestaccessController'
+		// })
+
+		$urlRouterProvider.otherwise('/login');
+
+	// $locationProvider.html5Mode(true);
+	}
+);
+
+pulseapp.run(['$rootScope', function($rootScope) {
+    $rootScope.$on('$routeChangeSuccess', function (event, current, previous) {
+	//	$rootScope.loginDisplay=current.$$route.loginDisplay;
+      
+    });
+}]);
+
+pulseapp.filter('unique', function() {
+   return function(collection, keyname) {
+      var output = [], 
+          keys = [];
+
+      angular.forEach(collection, function(item) {
+          var key = item[keyname];
+          if(keys.indexOf(key) === -1) {
+              keys.push(key);
+              output.push(item);
+          }
+      });
+      return output;
+	  
+   };
+});

@@ -1,0 +1,195 @@
+
+
+
+
+
+var loginController = pulseapp.controller('loginController', function ($scope, $rootScope,$state,PulseData,ngProgressFactory) {
+
+
+	$scope.Username='';
+	$scope.Password='';
+	$scope.loginDisplay=false;
+	$scope.loginFail=false;
+	$scope.user=sessionStorage.getItem("P_user");
+	$scope.authenticate = function(){
+		$scope.Username= encodeURI($scope.Username);
+		$scope.Password= encodeURI($scope.Password);
+		$scope.progressbar.start();
+		$scope.requestParam={username :$scope.Username,password : $scope.Password};
+		$scope.reportDisplay=true;
+		$scope.requestType="authenticate?";
+		PulseData.getLog($scope.requestParam,$scope.requestType,$scope.OnSuccessLogin,$scope.OnfailureLogin)
+		// sessionStorage.setItem("P_user",'gssagovi');
+		// 	sessionStorage.setItem("P_user_name",'Arunraj G');
+		// 	sessionStorage.setItem("P_user_country",'IN');
+		// 	sessionStorage.setItem("P_user_region",'Asia');
+		// 	$state.go('home');
+	}
+
+
+	$scope.OnSuccessLogin = function(response){
+
+		console.log(response.data);
+		if(response.data[0].length==1){
+
+			if(response.data[0]=='I'){
+
+				console.log('invalid password/username')
+				$scope.progressbar.complete();
+			}else if (response.data[0]=='U'){
+				console.log('unauthorized user');
+				$scope.progressbar.complete();
+			}
+			
+		}else{
+
+			$scope.requestParam={username : $scope.Username};
+			$scope.requestType="PersonalDetails.php";
+			PulseData.getAuthenticate($scope.requestParam,$scope.requestType,$scope.OnSuccessPersonalDetails,$scope.OnfailurePersonalDetails);
+			$scope.Token=response.data[0];
+			
+
+
+				
+		}
+
+	
+		
+		
+
+
+
+
+		// if(response.data.files[0].status=="loginsuccess"){
+
+
+
+
+		// 	sessionStorage.setItem("P_user",$scope.Username);
+		// 	sessionStorage.setItem("P_user_name",response.data.files[0].name);
+		// 	sessionStorage.setItem("P_user_country",response.data.files[0].country);
+		// 	sessionStorage.setItem("P_user_region",response.data.files[0].region);
+		// 	$scope.requestParam={user_id :$scope.Username,App_id:1,Region:response.data.files[0].region,Country:response.data.files[0].country};
+		// 	$scope.requestType='loginTracker';
+		// 	PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessLoginTracker,$scope.OnfailureLoginTracker)
+		// 	$state.go('home');
+		// 	$scope.progressbar.complete();
+
+
+		// }else{
+
+		// $scope.progressbar.complete();
+		// $scope.loginFail=true;
+		
+		// }
+
+	}
+
+	$scope.OnfailureLogin = function(){
+		console.log("error");
+
+$scope.progressbar.complete();
+
+
+
+	}
+
+	$scope.OnSuccessPersonalDetails = function(response){
+
+		 	sessionStorage.setItem("P_user",$scope.Username);
+			sessionStorage.setItem("P_user_name",response.data.files[0].name);
+		 	sessionStorage.setItem("P_user_country",response.data.files[0].country);
+		 	sessionStorage.setItem("P_user_region",response.data.files[0].region);
+		 	$scope.requestParam={user_id :$scope.Username,App_id:1,Region:response.data.files[0].region,Country:response.data.files[0].country};
+		 	$scope.requestType='loginTracker';
+		 	PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessLoginTracker,$scope.OnfailureLoginTracker)
+		 	$scope.requestParam={username :$scope.Username,token: $scope.Token};
+			$scope.requestType="getroles?";
+			PulseData.getLog($scope.requestParam,$scope.requestType,$scope.OnSuccessGetRoles,$scope.OnfailureGetRoles)
+
+
+	}
+
+	$scope.OnfailurePersonalDetails = function () {
+
+		console.log("Personal details Failed");
+	}
+
+
+
+
+	$scope.OnSuccessLoginTracker = function(response){
+
+		console.log(response);
+	}
+	$scope.OnfailureLoginTracker = function(){
+
+		console.log("Login Tracker Failed");
+	}
+
+	
+	$scope.OnSuccessGetRoles = function(response){
+console.log(response);
+				console.log(response.data.name);
+
+				if(response.data.name==undefined){
+					
+						 var chkstr='';
+						for(i=0;i<response.data.length;i++){
+
+							if(i==0){
+								chkstr=chkstr+"'";
+							}
+
+							chkstr=chkstr+response.data[i].code+',';
+
+
+						}
+
+						chkstr = chkstr.substring(0, chkstr.length-1);
+						chkstr=chkstr+"'";
+						sessionStorage.setItem("AccessCodes",chkstr);
+						console.log(chkstr);
+						$rootScope.userStatus=='Normal';
+						$state.go('home');
+						$scope.progressbar.complete();
+						
+
+				}else{
+						
+						sessionStorage.setItem("AccessCodes",'');
+						sessionStorage.setItem("UserAccess",'Admin');
+						$rootScope.userStatus='Admin';
+						$state.go('home');
+						$scope.progressbar.complete();
+				
+
+				}
+				
+	}
+
+	$scope.OnfailureGetRoles = function(){
+
+				console.log('Error getting Roles')
+	}
+
+
+$scope.init=  function(){
+	 $scope.progressbar = ngProgressFactory.createInstance();
+
+
+if(sessionStorage.getItem("P_user")){
+
+$state.go('home');
+
+}else{
+	$scope.loginDisplay=true;
+}
+
+
+
+}
+
+$scope.init();
+
+} );

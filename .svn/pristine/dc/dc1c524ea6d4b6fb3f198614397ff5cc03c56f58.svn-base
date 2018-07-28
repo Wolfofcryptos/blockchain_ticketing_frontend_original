@@ -1,0 +1,109 @@
+
+var pulseController = pulseapp.controller('pulseController', function ($rootScope,$scope,PulseData,$animate,ngProgressFactory) {
+
+		$rootScope.userId='gsspsrin';
+		$rootScope.categoryId=1;
+		$scope.Status=sessionStorage.getItem("State");
+		$scope.categoryList = [];
+		$scope.reportDisplay;
+		$rootScope.userStatus="Normal";
+		$scope.favDisplay;
+
+		//$rootScope.favouriteFilter='';
+		$scope.tab;
+		$scope.reportlist = function (categoryType){
+			if(categoryType== null || categoryType== 'null'){
+				categoryType='report';
+			}
+				
+				sessionStorage.setItem("State",categoryType);
+				$scope.tab = categoryType;
+				switch (categoryType) {
+						case 'report':
+							
+							$scope.requestParam={category_type :'report'};
+							$scope.reportDisplay=true;
+							$scope.requestType="getCategory";
+							PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessReportlist,$scope.OnfailureReportlist)
+
+							break;
+						case 'links':
+							$scope.requestParam={category_type :'common'};
+							$scope.requestType="getCategory";
+							PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessReportlist,$scope.OnfailureReportlist)	
+							$scope.reportDisplay=true;
+
+							break;
+						case 'favourites':
+							//$scope.requestParam={category_type :'common'};
+							$scope.reportDisplay=false;
+							window.location.hash="/"+$scope.tab;
+							break;
+						default:
+
+				}
+
+			
+			
+			
+
+
+		}
+
+		$scope.OnSuccessReportlist = function(response) {
+
+
+			$scope.categoryList=response.data.files;
+			$rootScope.categoryId=response.data.files[0].category_id;
+			PulseData.setCategoryTitle(response.data.files[0].category_name);
+		 	$scope.progressbar.complete();
+			window.location.hash="/"+$scope.tab;
+
+		}
+
+		$scope.OnfailureReportlist = function(response) {
+
+			console.log("Category List HTTP Fail");
+			$scope.progressbar.complete();
+
+		}
+
+		$scope.categoryListClick = function(categoryId,categoryName) {
+
+			 $scope.progressbar.start();
+			 $rootScope.$emit("CallParentMethod",categoryId,categoryName);
+		}
+
+		$scope.favFilter = function(x){
+
+			//$rootScope.favAnime=false;
+			$rootScope.favouriteFilter=x.category_id;
+			PulseData.setCategoryTitle(x.category_name);
+			console.log($rootScope.favAnime);
+
+		}
+
+		$scope.emptyChange = function (){
+		//	$rootScope.favAnime=false;
+			PulseData.setFavouriteFilter('');
+			PulseData.setCategoryTitle("All");
+			console.log($rootScope.favAnime);
+		}
+	  $scope.categoryListempty = function(){
+		 
+		$scope.categoryList = [];
+		  
+	  }
+		$scope.init= function() {
+		 $scope.progressbar = ngProgressFactory.createInstance();
+         $scope.progressbar.start();
+            
+		$scope.reportlist($scope.Status);
+		//$scope.reportlist('report');
+
+	}
+	$scope.init();
+
+	
+
+});

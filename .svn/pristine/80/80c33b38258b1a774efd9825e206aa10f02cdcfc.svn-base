@@ -1,0 +1,12 @@
+/*
+
+
+
+*/
+
+
+var linkController = pulseapp.controller('linkController', function ($scope, $rootScope) {    
+
+
+
+});

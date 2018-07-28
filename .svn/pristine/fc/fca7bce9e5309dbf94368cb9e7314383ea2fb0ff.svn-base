@@ -1,0 +1,13 @@
+/*
+
+
+
+*/
+
+
+var requestaccessController = pulseapp.controller('requestaccessController', function ($scope, $rootScope) {    
+
+
+
+
+});

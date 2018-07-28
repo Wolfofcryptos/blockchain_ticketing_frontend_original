@@ -1,0 +1,165 @@
+ var addController = pulseapp.controller('addController', function ($scope, $rootScope,PulseData,ngProgressFactory,$window,$mdDialog,fileUpload,$mdToast,$q,$timeout,$interval,value,type) {
+    	
+  	
+       $scope.category_type='';
+      if(type=='report'){
+
+        $scope.category_type='Report';
+
+      }else if(type=='links'){
+
+        $scope.category_type='Common';
+
+      }
+
+
+      $scope.typeValue=value;
+
+      $scope.cancel = function () {
+        $mdDialog.cancel();
+      }
+
+
+ if($scope.typeValue=='Category'){
+         $scope.iconurl='inventory.png'; 
+          }
+          else if($scope.typeValue=='Report'){
+         $scope.iconurl='report_icon1.png'; 
+          }
+
+     
+        $scope.progressFunction = function() {
+
+
+          var file = $scope.filename;
+          if($scope.typeValue=='Category'){
+          var method='savedata';  
+          }
+          else if($scope.typeValue=='Report'){
+          var method='savedataReportIcons';  
+          }
+          
+                fileUpload.uploadFileToUrl(file,method).then(function(data){
+
+                    console.log(data);
+                    console.log($scope.editname);
+                    console.log(data.object.filename);
+                    $scope.iconurl=data.object.filename;
+                    $scope.produceErrors = false;
+                
+                },function(data){
+
+
+                  console.log(data);
+                  $scope.produceErrors = true;
+
+                });
+
+                    return $q(function(resolve, reject) {
+                        $timeout(function() {
+                            !$scope.produceErrors ? resolve() : reject();
+                        }, 1500);
+                    });
+                };
+
+
+      $scope.addSave= function(){
+
+
+
+        $scope.searchButtonText = "Searching";
+
+        if($scope.typeValue=='Report'){
+
+
+          if($scope.addDocurl==''){
+
+          $scope.addDocurl_rep=null;
+
+        }else{
+
+            $scope.addDocurl_rep=$scope.addDocurl
+
+        }
+
+        if($scope.addVideourl==''){
+
+          $scope.addVideourl_rep=null;
+
+        }else{
+
+            $scope.addVideourl_rep=$scope.addVideourl
+
+        }
+
+
+        $scope.requestParam={report_title:$scope.addName,report_url:$scope.addUrl,report_desc:$scope.addDesc,icon_url:$scope.iconurl,user_id:sessionStorage.getItem("P_user"),doc_url:$scope.addDocurl_rep,video_url:$scope.addVideourl_rep,category_id:$rootScope.categoryId};
+
+        $scope.requestType='addReport';
+    PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessAddSave,$scope.OnfailureAddSave);
+
+
+
+        }else if ($scope.typeValue=='Category'){
+
+
+$scope.requestParam={category_name:$scope.addCatName,icon_url:$scope.iconurl,user_id:sessionStorage.getItem("P_user"),category_code:$scope.addCatCode,category_type:$scope.category_type};
+
+        $scope.requestType='addCategory';
+    PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessAddCatSave,$scope.OnfailureAddCatSave);
+
+        }
+
+        
+
+      }
+
+      $scope.OnSuccessAddSave = function (response){
+
+        console.log(response);
+        $scope.searchButtonText = "Search";
+        $mdDialog.cancel();
+        $rootScope.$emit("dialogClose");
+        $scope.AddToast('Report Added Successfully!');
+
+      }
+
+      $scope.OnfailureEditSave = function(){
+        console.log("Add Report failed");
+        $scope.searchButtonText = "Search";
+        $scope.AddToast('Report Add Failed!');
+      }
+
+      $scope.OnSuccessAddCatSave = function(){
+
+        $scope.searchButtonText = "Search";
+        $mdDialog.cancel();
+        $rootScope.$emit("reload");
+        $scope.AddToast('Category Added Successfully!');
+
+
+      }
+
+      $scope.OnfailureAddCatSave = function(){
+
+        console.log('category add failed');
+         $scope.searchButtonText = "Search";
+          $scope.AddToast('Category Add Failed!');
+      }
+
+
+       $scope.AddToast = function(text) {
+   // var pinTo = $scope.getToastPosition();
+
+    $mdToast.show(
+      $mdToast.simple()
+        .textContent(text)
+        .position('top right')
+        .hideDelay(3000)
+    );
+  };
+
+
+
+
+});

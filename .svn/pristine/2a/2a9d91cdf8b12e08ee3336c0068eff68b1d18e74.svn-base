@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Pulse Navigation</title>
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no">
+		<meta name="description" content="">
+		<meta name="author" content="">
+
+
+		<link rel="stylesheet" href="css/bootstrap/bootstrap.css">
+		<link rel="stylesheet" href="css/icomoon.css">
+		<link rel="stylesheet" href="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css"
+				type="text/css"/>
+		<link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" href="bower_components/angular-progress-button-styles/dist/angular-progress-button-styles.css">
+		<link rel="stylesheet" href="css/ngProgress.css">
+		
+		  <link rel="stylesheet" type="text/css" href="css/angular-material.css"> 
+		
+
+
+
+		<link rel="stylesheet" href="css/styles.css">
+
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+
+					<script src="bower_components/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
+
+
+		<script src="js/library/angular.min.js"></script>
+	<script src="bower_components/ng-scrollbars/dist/scrollbars.min.js"></script>
+
+		<script type="text/javascript" src="bower_components/angular-progress-button-styles/dist/angular-progress-button-styles.min.js"></script>
+		<script src="bower_components/angular-ui-router/release/angular-ui-router.min.js" ></script>
+		<script src="js/library/angular-animate.js"></script>
+
+		<script src="js/library/angular-route.min.js"></script>
+		<script src="js/library/angular-cookies.js"></script>
+		<script src="js/library/ngprogress.js"></script>
+
+		<script src="js/modules/angular-fileupload.js"></script>
+		<script src="js/library/bootstrap.js"></script>
+	 <!-- 	<script src="js/jquery.backstretch.min.js"></script>
+	 	<script src="js/scripts.js"></script> -->
+		   <script src="js/library/angular-aria.min.js"></script>  
+		<script src="js/library/angular-messages.min.js" ></script>
+		<script src="js/library/svg-assets-cache.js"></script>
+		<script src="js/library/angular-material.js"></script> 
+
+		<script src="js/app.js"></script>
+
+		<script src="js/controller/LoginController.js"></script>
+		<script src="js/controller/PulseController.js"></script>
+		<script src="js/controller/ReportController.js"></script>
+		<script src="js/controller/LinkController.js"></script>
+		<script src="js/controller/FavouritesController.js"></script>
+		<script src="js/controller/RequestAccessController.js"></script>
+		<script src="js/controller/ReadMoreController.js"></script>
+		<script src="js/controller/editcontroller.js"></script>
+		<script src="js/services/PulseNavigationService.js"></script>
+			<script src="js/services/FileUpload.js"></script>
+<!-- <script src="http://code.jquery.com/jquery-1.9.0.js"></script> -->
+			<!-- <script src="http://code.jquery.com/jquery-migrate-1.0.0.js"></script> -->
+
+
+
+<script>
+	var history_api = typeof history.pushState !== 'undefined';
+	// history.pushState must be called out side of AngularJS Code
+	if ( history_api ) history.pushState(null, 'home', '#home');  // After the # you should write something, do not leave it empty
+	</script>
+	<script>
+	function preload(){
+
+var is_chrome = navigator.userAgent.toLowerCase().indexOf('chrome') > -1;
+var id = localStorage.getItem("id");
+
+if(is_chrome == false){
+var url =  window.location.href;
+var b = url.replace(/'/g, '"');
+// var oShell = new ActiveXObject("wscript.shell");
+// oShell.Run("cmd.exe /k start chrome " +b);
+
+//Browsers.Item("btChrome", Browsers.pX64).Run("http://smartbear.com");
+//window.self.close();
+}
+
+}
+window.onpaint = preload();
+
+	</script>
+
+	</head>
+
+
+
+
+
+
+	 <body ng-app="pulse" oncontextmenu="return false;">
+
+		 <div class="mainpge" ui-view> </div>
+
+		 <div ui-view="Content"> </div>
+
+
+		 <!-- <script src="js/library/jquery.js"></script> -->
+	 	
+	 	<!-- <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
+	 	<script src="js/modules/scrollbars.js"></script> -->
+
+	</body>
+</html>

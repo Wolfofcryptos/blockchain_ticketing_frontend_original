@@ -1,0 +1,30 @@
+
+var pulseController = pulseapp.controller('pulseController', function ($scope, PulseData,$rootScope) {
+
+		 $scope.names = [];
+		
+		$scope.reportlist = function (){
+			$scope.requestParam={Customer :"Global", 
+                                 Site   :"Global"};
+			PulseData.getdata($scope.requestParam,$scope.OnSuccess,$scope.Onfailure)
+			
+/*		$scope.names=[
+		{name:'Inventory'},
+        {name:'Manufacture'},
+        {name:'Order Management'},
+        {name:'People & Resource'},
+        {name:'Purchasing'},
+        {name:'Quality'},
+        {name:'Quotaions'},
+        {name:'Transportation'}];*/
+		
+		
+		}
+
+		$scope.OnSuccess = function(response) {
+			
+			console.log(response);
+			$scope.names=response.data.files;
+			window.location.hash="/report";
+		}
+});

@@ -1,0 +1,29 @@
+var path = require('path');
+var multer  = require('multer');
+
+var storage = multer.diskStorage({
+  destination: './public/images/',
+  filename: function (req, file, cb) {
+    cb(null, file.originalname.replace(path.extname(file.originalname), "") + '-' + Date.now() + path.extname(file.originalname))
+
+  }
+})
+
+var upload = multer({ storage: storage }).single('file');
+
+// Upload file
+exports.uploadmethod = function(req,res){
+
+
+
+	upload(req, res, function (err) {
+    if (err) {
+		res.send({'status':'Error Upload','object':req.file});
+      // An error occurred when uploading
+      return
+    }
+
+  res.send({'status':'Success','object':req.file});
+    // Everything went fine
+  })
+};

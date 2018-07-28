@@ -1,0 +1,181 @@
+/*
+
+
+
+*/
+
+
+var linkController = pulseapp.controller('linkController', function ($scope, $rootScope,PulseData,ngProgressFactory,$mdDialog) { 
+
+	//variables
+	
+	$scope.linkList=[];
+$scope.data=PulseData.dat;	
+
+	$scope.linkListdetails = function(){
+		
+		
+			$scope.isVisibleList='loader';
+			$scope.requestType="getReportDetails";
+			$scope.requestParam={category_id :$rootScope.categoryId,adid:$rootScope.userId};
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccesslinkList,$scope.OnfailurelinkList)
+		
+	}
+	
+	$scope.OnSuccesslinkList = function(response) {
+
+		if(response.data.files==''){
+
+			
+			console.log('its working!!');
+		}else{
+
+		$scope.linkList=response.data.files;
+		$scope.isVisibleList='list';
+		
+		}
+
+		
+		
+		$scope.progressbar.complete();	
+		
+		
+	}
+	
+	$scope.OnfailurelinkList=function(response){
+		
+		console.log("Link List HTTP Fail");
+		$scope.progressbar.complete();
+	}
+	
+	$scope.favouriteAdd = function (event,listval){
+		$scope.progressbar.start();
+		$scope.requestParam={category_id :$rootScope.categoryId,report_id : listval.report_id, adid: $rootScope.userId};
+		if($(event.target).hasClass('active-fav')){
+			$scope.requestType="deleteFav";
+			
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessDelFavourties,$scope.OnfailureDelFavourites);
+			$(event.target).removeClass('active-fav');
+			
+		}else{
+			
+		console.log(listval.report_id,$rootScope.categoryId,$rootScope.userId);
+		
+		$scope.requestType="addFav";
+		
+		
+		PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessAddFavourties,$scope.OnfailureAddFavourites);
+		$(event.target).addClass('active-fav');
+		
+		
+		}
+	
+	}
+	
+	$scope.OnSuccessAddFavourties = function (response){
+		console.log("favourites"+response)
+		$scope.progressbar.complete();
+		
+	}
+	$scope.OnfailureAddFavourites = function (response){
+		
+		console.log("favourites Add failed");
+		$scope.progressbar.complete();
+	}
+	
+	$scope.OnSuccessDelFavourties = function (response){
+		console.log("favourite Delete success")
+		$scope.progressbar.complete();
+		
+	}
+	$scope.OnfailureDelFavourites = function (response){
+		
+		console.log("favourites Delete failed");
+		$scope.progressbar.complete();
+	}
+	
+	
+	$rootScope.$on("CallParentMethod", function(events,categoryid,categoryName,categoryIconUrl){
+		$rootScope.categoryId=categoryid;
+		PulseData.setCategoryTitle(categoryName);
+		PulseData.setCategoryIcon(categoryIconUrl);
+        $scope.linkListdetails();
+        });
+
+	 $rootScope.$on("dialogClose", function(){
+
+	 	$scope.linkListdetails();
+	 });
+
+
+
+	$scope.tracker = function(x){
+
+		console.log("called");
+		$scope.requestParam={user_id:sessionStorage.getItem("P_user"),App_id:1,Region:sessionStorage.getItem("P_user_region"),mod_id:x.report_id};
+		$scope.requestType='viewsCount';
+		PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessViewsCount,$scope.OnfailureViewsCount);
+	}
+
+	$scope.OnSuccessViewsCount = function(response){
+
+		console.log(response.data);
+
+	}
+	$scope.OnfailureViewsCount = function(){
+
+		console.log("failure viewscount");
+	}
+
+	 $scope.add = function(ev) {
+    $mdDialog.show({
+
+      templateUrl: 'templates/add.html',
+      controller: 'addController',
+      parent: angular.element(document.body),
+      locals:{value:'Report',type:''},
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+    })
+  };
+
+
+	  $scope.edcon = function(ev,x) {
+    $mdDialog.show({
+
+      templateUrl: 'templates/add.html',
+    controller: 'editController',
+      parent: angular.element(document.body),
+      locals:{item:x,value:'Report'},
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+    })
+  };
+
+
+	 $scope.delete = function(ev,x) {
+  	$rootScope.delVal='Report';
+    $mdDialog.show({
+
+      templateUrl: 'templates/Delete.html',
+      controller: 'deleteController',
+      parent: angular.element(document.body),
+      locals:{item:x},
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+    })
+  };
+	
+	$scope.init = function (){
+		
+		$scope.linkListdetails();
+	
+	}  
+
+	$scope.init();
+
+
+});

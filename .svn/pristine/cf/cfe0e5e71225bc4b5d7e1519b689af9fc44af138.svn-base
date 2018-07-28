@@ -1,0 +1,13 @@
+/*
+
+
+
+*/
+
+
+var pulseMainController = pulseapp.controller('pulseMainController', function ($scope, $rootScope) {    
+
+
+
+
+});

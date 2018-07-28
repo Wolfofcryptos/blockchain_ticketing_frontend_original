@@ -1,0 +1,361 @@
+</ul>
+			<div ng-show="reportDisplay==true">
+			<ul>
+				<li ng-repeat="x in categoryList" ng-click="categoryListClick(x.category_id)">
+				{{x.category_name}}
+				</li>
+			</ul>
+			</div>
+
+			<div ng-show="reportDisplay==false">
+				<div>
+					<ul>
+						<li ng-click="emptyChange()">All</li>
+					</ul>
+
+				</div>
+				<div>
+					<ul ng-repeat="x in favouriteList |  filter:{'category_type':  'Report'}:true">
+						<li ng-click="favFilter(x)">{{x.category_name}}</li>
+					</ul>
+				</div>
+				<div>
+					<ul ng-repeat="x in favouriteList | filter:{'category_type':  'Common'}:true">
+					<li > {{x.category_name}}</li>
+					</ul>
+				</div>
+
+
+
+		</div>
+
+		<div ng-view></div>
+		
+
+
+							<ul class="fp-alltab-menu">
+								<li class="header">akljskdjaksd</li>
+								<li>
+									<div class="menu-info">
+										<img src="images/sideicon/icon1.png">
+										<h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+									</div>
+									<div class="box-tools pull-right">
+										<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+										<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+										<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+									</div>
+								</li>
+								<li>
+									<div class="menu-info">
+									<h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+									</div>
+								</li>
+								<li>
+									<div class="menu-info">
+									<h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+									</div>
+								</li>
+								<li>
+									<div class="menu-info">
+									<h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+									</div>
+								</li><li>
+									<div class="menu-info">
+									<h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
+									</div>
+								</li>
+							</ul>
+						</div>
+						<div id="menu1" class="tab-pane fade">
+						  <h3>Menu 1</h3>
+						  <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+						</div>
+						<div id="menu2" class="tab-pane fade">
+						  <h3>Menu 2</h3>
+						  <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+						</div>
+						<div id="menu3" class="tab-pane fade">
+						  <h3>Menu 3</h3>
+						  <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			
+			
+			<!-- main bar --->
+			<div class="fp-mainbar">
+				<div class="container-fluid">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title pull-left">
+							With short text it works great!
+							</h3>
+
+							<button class="btn btn-default pull-right">New</button>
+							<div class="clearfix"></div>
+						</div>
+					</div>
+				</div>
+				<!-- Report Panels -->
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-6 col-xs-12 col-md-4 col-lg-3 report-panel">
+						<div class="box">
+							<!-- .box-header -->
+							<div class="box-header">
+							  <h3 class="box-title">Work Order aging</h3>
+								<!-- box-tools -->
+							  <div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+							  </div>
+							  <!-- /.box-tools -->
+							</div>
+							<!-- /.box-header -->
+							<!--.box-body -->
+							<div class="box-body">
+								<div class="info-box">
+								<span class="info-box-icon">
+									<img src="images/report_icon1.png">
+								</span>
+								<!-- .info-box-content -->
+								<div class="info-box-content">
+								  <span>You can add footers to panelsle demonstrates this. flshdfhasdf asd fasdfasd dhflashd dhflashdfok lhalsdhflasjdaksdjhksjhdsadjhlsajdhkas asdfas </span>
+								</div>
+								<!-- /.info-box-content -->
+							  </div>
+							</div>
+							<!-- /.box-body -->
+							<!-- .box-footer -->
+							 <div class="box-footer">
+								<ul class="nav nav-pills nav-justified">
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+								</ul>
+							</div>
+							<!-- /.box-footer -->
+						</div>
+					</div>
+					<div class="col-sm-6 col-xs-12 col-md-4 col-lg-3 report-panel">
+						<div class="box">
+							<!-- .box-header -->
+							<div class="box-header">
+							  <h3 class="box-title">Work Order aging</h3>
+								<!-- box-tools -->
+							  <div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+							  </div>
+							  <!-- /.box-tools -->
+							</div>
+							<!-- /.box-header -->
+							<!--.box-body -->
+							<div class="box-body">
+								<div class="info-box">
+								<span class="info-box-icon">
+									<img src="images/report_icon1.png">
+								</span>
+								<!-- .info-box-content -->
+								<div class="info-box-content">
+								  <span>You can add footers to panelsle demonstrates this. flshdfhasdf asd fasdfasd dhflashd dhflashdfok lhalsdhflasjdaksdjhksjhdsadjhlsajdhkas asdfas </span>
+								</div>
+								<!-- /.info-box-content -->
+							  </div>
+							</div>
+							<!-- /.box-body -->
+							 <div class="box-footer">
+								<ul class="nav nav-pills nav-justified">
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-xs-12 col-md-4 col-lg-3 report-panel">
+						<div class="box">
+							<!-- .box-header -->
+							<div class="box-header">
+							  <h3 class="box-title">Work Order aging</h3>
+								<!-- box-tools -->
+							  <div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+							  </div>
+							  <!-- /.box-tools -->
+							</div>
+							<!-- /.box-header -->
+							<!--.box-body -->
+							<div class="box-body">
+								<div class="info-box">
+								<span class="info-box-icon">
+									<img src="images/report_icon1.png">
+								</span>
+								<!-- .info-box-content -->
+								<div class="info-box-content">
+								  <span>You can add footers to panelsle demonstrates this. flshdfhasdf asd fasdfasd dhflashd dhflashdfok lhalsdhflasjdaksdjhksjhdsadjhlsajdhkas asdfas </span>
+								</div>
+								<!-- /.info-box-content -->
+							  </div>
+							</div>
+							<!-- /.box-body -->
+							 <div class="box-footer">
+								<ul class="nav nav-pills nav-justified">
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-xs-12 col-md-4 col-lg-3 report-panel">
+						<div class="box">
+							<!-- .box-header -->
+							<div class="box-header">
+							  <h3 class="box-title">Work Order aging</h3>
+								<!-- box-tools -->
+							  <div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+							  </div>
+							  <!-- /.box-tools -->
+							</div>
+							<!-- /.box-header -->
+							<!--.box-body -->
+							<div class="box-body">
+								<div class="info-box">
+								<span class="info-box-icon">
+									<img src="images/report_icon1.png">
+								</span>
+								<!-- .info-box-content -->
+								<div class="info-box-content">
+								  <span>You can add footers to panelsle demonstrates this. flshdfhasdf asd fasdfasd dhflashd dhflashdfok lhalsdhflasjdaksdjhksjhdsadjhlsajdhkas asdfas </span>
+								</div>
+								<!-- /.info-box-content -->
+							  </div>
+							</div>
+							<!-- /.box-body -->
+							 <div class="box-footer">
+								<ul class="nav nav-pills nav-justified">
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-xs-12 col-md-4 col-lg-3 report-panel">
+						<div class="box">
+							<!-- .box-header -->
+							<div class="box-header">
+							  <h3 class="box-title">Work Order aging</h3>
+								<!-- box-tools -->
+							  <div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+							  </div>
+							  <!-- /.box-tools -->
+							</div>
+							<!-- /.box-header -->
+							<!--.box-body -->
+							<div class="box-body">
+								<div class="info-box">
+								<span class="info-box-icon">
+									<img src="images/report_icon1.png">
+								</span>
+								<!-- .info-box-content -->
+								<div class="info-box-content">
+								  <span>You can add footers to panelsle demonstrates this. flshdfhasdf asd fasdfasd dhflashd dhflashdfok lhalsdhflasjdaksdjhksjhdsadjhlsajdhkas asdfas </span>
+								</div>
+								<!-- /.info-box-content -->
+							  </div>
+							</div>
+							<!-- /.box-body -->
+							 <div class="box-footer">
+								<ul class="nav nav-pills nav-justified">
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-xs-12 col-md-4 col-lg-3 report-panel">
+						<div class="box">
+							<!-- .box-header -->
+							<div class="box-header">
+							  <h3 class="box-title">Work Order aging</h3>
+								<!-- box-tools -->
+							  <div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+							  </div>
+							  <!-- /.box-tools -->
+							</div>
+							<!-- /.box-header -->
+							<!--.box-body -->
+							<div class="box-body">
+								<div class="info-box">
+								<span class="info-box-icon">
+									<img src="images/report_icon1.png">
+								</span>
+								<!-- .info-box-content -->
+								<div class="info-box-content">
+								  <span>You can add footers to panelsle demonstrates this. flshdfhasdf asd fasdfasd dhflashd dhflashdfok lhalsdhflasjdaksdjhksjhdsadjhlsajdhkas asdfas </span>
+								</div>
+								<!-- /.info-box-content -->
+							  </div>
+							</div>
+							<!-- /.box-body -->
+							 <div class="box-footer">
+								<ul class="nav nav-pills nav-justified">
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<div class="col-sm-6 col-xs-12 col-md-4 col-lg-3 report-panel">
+						<div class="box">
+							<!-- .box-header -->
+							<div class="box-header">
+							  <h3 class="box-title">Work Order aging</h3>
+								<!-- box-tools -->
+							  <div class="box-tools pull-right">
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+								<button type="button" class="btn btn-box-tool" data-widget="remove"><i class="fa fa-times"></i></button>
+							  </div>
+							  <!-- /.box-tools -->
+							</div>
+							<!-- /.box-header -->
+							<!--.box-body -->
+							<div class="box-body">
+								<div class="info-box">
+								<span class="info-box-icon">
+									<img src="images/report_icon1.png">
+								</span>
+								<!-- .info-box-content -->
+								<div class="info-box-content">
+								  <span>You can add footers to panelsle demonstrates this. flshdfhasdf asd fasdfasd dhflashd dhflashdfok lhalsdhflasjdaksdjhksjhdsadjhlsajdhkas asdfas </span>
+								</div>
+								<!-- /.info-box-content -->
+							  </div>
+							</div>
+							<!-- /.box-body -->
+							 <div class="box-footer">
+								<ul class="nav nav-pills nav-justified">
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+									<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					
+					</div>
+				</div>

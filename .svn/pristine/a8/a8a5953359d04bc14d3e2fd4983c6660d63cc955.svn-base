@@ -1,0 +1,7 @@
+
+var pulseController = pulseapp.controller('pulseController', function ($scope, $rootScope) {    
+
+
+
+
+});

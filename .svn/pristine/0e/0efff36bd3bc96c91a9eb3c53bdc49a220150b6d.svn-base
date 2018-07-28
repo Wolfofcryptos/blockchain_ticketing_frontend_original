@@ -1,0 +1,162 @@
+/*
+
+
+
+*/
+
+var reportMainController = pulseapp.controller('reportMainController', function ($scope, $rootScope,PulseData,ngProgressFactory,$window,$mdDialog) {
+
+	//variables
+	$scope.reportDetails=[];
+	//$scope.categoryTitle='';
+
+$window.document.activeElement.blur();
+	$scope.reportDetailList= function() {
+			$scope.isVisibleList='loader';
+			console.log("Hello"+$rootScope.categoryId)
+			$scope.requestType="getReportDetails";
+			$scope.requestParam={category_id :$rootScope.categoryId,adid:$rootScope.userId};
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessReportDetailList,$scope.OnfailureReportDetailList)
+
+	}
+
+	$scope.OnSuccessReportDetailList = function(response) {
+
+		$scope.progressbar.complete();
+		$scope.reportDetails=response.data.files;
+		$scope.isVisibleList='list';
+
+
+	}
+	$scope.OnfailureReportDetailList=function(response){
+
+			$scope.progressbar.complete();
+			console.log("Report Details HTTP Fail");
+	}
+
+
+	$rootScope.$on("CallParentMethod", function(events,categoryid,categoryName,categoryIconUrl){
+		$rootScope.categoryId=categoryid;
+		PulseData.setCategoryTitle(categoryName);
+		PulseData.setCategoryIcon(categoryIconUrl);
+		//$rootScope.categoryTitle=categoryName;
+        $scope.reportDetailList();
+        });
+
+	$scope.favouriteAdd = function (event,listval){
+
+		$scope.progressbar.start();
+		$scope.requestParam={category_id :$rootScope.categoryId,report_id : listval.report_id, adid: $rootScope.userId};
+		if($(event.target).hasClass('active-fav')){
+			$scope.requestType="deleteFav";
+			//$scope.requestParam={fav_id:listval.fav_id};
+			$(event.target).removeClass('active-fav');
+			console.log("removed")
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessDelFavourties,$scope.OnfailureDelFavourites);
+
+
+		}else{
+
+		console.log(listval.report_id,$rootScope.categoryId,$rootScope.userId);
+		console.log("added")
+		$scope.requestType="addFav";
+
+
+		PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessAddFavourties,$scope.OnfailureAddFavourites);
+		$(event.target).addClass('active-fav');
+
+
+		}
+
+	}
+
+	$scope.OnSuccessAddFavourties = function (response){
+		$scope.progressbar.complete();
+		console.log("favourites"+response)
+
+
+	}
+	$scope.OnfailureAddFavourites = function (response){
+
+
+		$scope.progressbar.complete();
+		console.log("favourites Add failed");
+	}
+
+	$scope.OnSuccessDelFavourties = function (response){
+
+		console.log("favourite Delete success")
+		$scope.progressbar.complete();
+
+
+
+
+	}
+	$scope.OnfailureDelFavourites = function (response){
+
+		console.log("favourites Delete failed");
+		$scope.progressbar.complete();
+	}
+
+	$scope.tracker = function(x){
+
+		console.log("called");
+		$scope.requestParam={user_id:sessionStorage.getItem("P_user"),App_id:1,Region:sessionStorage.getItem("P_user_region"),mod_id:x.report_id};
+		$scope.requestType='viewsCount';
+		PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessViewsCount,$scope.OnfailureViewsCount);
+	}
+
+	$scope.OnSuccessViewsCount = function(response){
+
+		console.log(response.data);
+
+	}
+	$scope.OnfailureViewsCount = function(){
+
+		console.log("failure viewscount");
+	}
+
+
+
+	   $scope.showAdvanced = function(ev) {
+    $mdDialog.show({
+
+      templateUrl: 'templates/ReadMore.html',
+      controller: readmoreController,
+      parent: angular.element(document.body),
+      targetEvent: ev,
+      clickOutsideToClose:true,
+      fullscreen: $scope.customFullscreen // Only for -xs, -sm breakpoints.
+    })
+    .then(function(answer) {
+      $scope.status = 'You said the information was "' + answer + '".';
+    }, function() {
+      $scope.status = 'You cancelled the dialog.';
+    });
+  };
+
+   function readmoreController($scope, $mdDialog) {
+    $scope.cancel = function() {
+      $mdDialog.cancel();
+    };
+}
+
+
+	$scope.init= function() {
+
+			if(sessionStorage.getItem("P_user")){
+
+$scope.reportDetailList();
+			}else{
+$state.go('login');
+
+			}
+
+		
+
+	}
+	$scope.init();
+
+
+
+});

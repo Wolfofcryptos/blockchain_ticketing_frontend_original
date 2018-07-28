@@ -1,0 +1,86 @@
+
+var pulseController = pulseapp.controller('pulseController', function ($rootScope,$scope,PulseData) {
+
+
+
+		
+		$rootScope.categoryId=1;
+		$scope.categoryList = [];
+		$scope.reportDisplay;
+		$scope.favDisplay;
+		//$rootScope.favouriteFilter='';
+		$scope.tab;
+		$scope.reportlist = function (categoryType){
+
+			//$scope.tab=categoryType;
+
+				switch (categoryType) {
+						case 'report':
+							$scope.requestParam={category_type :'report'};
+							$scope.reportDisplay=true;
+
+							break;
+						case 'links':
+							$scope.requestParam={category_type :'common'};
+							$scope.reportDisplay=true;
+
+							break;
+						case 'favourites':
+							//$scope.requestParam={category_type :'common'};
+							$scope.reportDisplay=false;
+
+							break;
+						default:
+
+				}
+
+
+			$scope.tab = categoryType;
+			$scope.requestType="getCategory";
+			//$scope.requestParam={category_type :categoryType};
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessReportlist,$scope.OnfailureReportlist)
+
+
+		}
+
+		$scope.OnSuccessReportlist = function(response) {
+
+
+			$scope.categoryList=response.data.files;
+			$rootScope.categoryId=response.data.files[0].category_id;
+			PulseData.setCategoryTitle(response.data.files[0].category_name);
+			window.location.hash="/"+$scope.tab;
+		}
+
+		$scope.OnfailureReportlist = function(response) {
+
+			console.log("Category List HTTP Fail");
+
+		}
+
+		$scope.categoryListClick = function(categoryId,categoryName) {
+
+			 $rootScope.$emit("CallParentMethod",categoryId,categoryName);
+		}
+
+		$scope.favFilter = function(x){
+
+			$rootScope.favouriteFilter=x.category_id;
+
+		}
+
+		$scope.emptyChange = function (){
+
+			PulseData.setFavouriteFilter('');
+		}
+
+		$scope.init= function() {
+
+		$scope.reportlist('report');
+
+	}
+	$scope.init();
+
+
+
+});

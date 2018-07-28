@@ -1,0 +1,15 @@
+[RoutePrefix("api/users")]
+public class UsersController : ApiController
+    {
+        /// <summary>
+        ///     Gets the currently logged in user account in AD as a User object
+        /// </summary>
+        /// <returns></returns>
+        [Route("current/")]
+        public User GetCurrentUser()
+        {
+            User user = new UserFactory().Create(WindowsIdentity.GetCurrent());
+           
+            return user;
+        }
+    }

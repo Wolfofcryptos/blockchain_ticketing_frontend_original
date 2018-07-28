@@ -1,0 +1,45 @@
+<!-- <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog"> -->
+    <div class="readmore-popup">
+      <!-- Modal content-->
+      <div class="modal-content fp-modal-content">
+        <div class="modal-header fp-modal-header">
+          <button type="button" class="close" data-dismiss="modal" ng-click="cancel()"><span class="fp-icon icon-fp-icon-cancel"></span></button>
+          <h4 class="modal-title fp-modal-title">Support</h4>
+        </div>
+        <div class="modal-body fp-modal-body">
+	<div class="fp-modal-box">
+	<span class="modal-box-icon">
+	<img src="{{imgurl_readmore}}">
+	</span>
+	<!-- .info-box-content -->
+	<div class="modal-box-content">
+<h4>Americas</h4>
+<div class="support-Content">
+<label>US/Canada sites:</label> <span>+1(408) 576-7100</span><br>
+<label>US/Canada toll free:</label> +1(888) 782-2296<br>
+<label>Brazil:</label> +55(15) 4009-6323<br>
+<label>Mexico sites:</label> +52(33) 3818-9090 <br>
+</div>
+<h4>EMEA</h4>
+<div class="support-Content">
+<label>All site locations:</label> +492117584567000 
+</div>
+<h4>Asia</h4>
+<div class="support-Content">
+<label>Chennai, India:</label> +91 44 66259700<br>
+<label>Penang, Malaysia:</label> +604 506-4555<br>
+<label>China:</label> +86 755 86155600<br>
+<label>All other Asia sites:</label> +604 506-4288 <br>
+</div>
+	</div>
+	<!-- /.info-box-content -->
+	</div>
+        </div>
+       <!--  <div class="modal-footer fp-modal-footer">
+          <button type="button" ng-show="" class="btn btn-launch" data-dismiss="modal"><a href={{url_readmore}} target="_blank">Launch</a></button>
+        </div> -->
+      </div>
+      
+   </div>
+  <!--</div> -->

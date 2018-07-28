@@ -1,0 +1,183 @@
+<!-- full layout container  -->
+		<div class="fp-container" ng-controller="pulseController">
+			<!-- side bar -->
+			<div class="fp-sidebar">
+				<div class="fp-logo">
+					<a href="index.html">flexpulse</a>
+				</div>
+
+				<div class="fp-hub-container">
+					<ul class="nav nav-tabs fp-nav-tabs">
+						<li ng-class="{'active': Status == null  || Status == 'report'}"><a data-toggle="tab" herf="#home" class="fb-rpt" ng-click="reportlist('report')" ><span class=".fp-tab-icon icon-fp-icon-report"></span></a></li>
+						<li ng-class="{'active': Status == 'links'}"><a data-toggle="tab" herf="#menu1" class="fb-link" ng-click="reportlist('links')" ><span class="fp-tab-icon icon-fp-icon-link"></span></a></a></li>
+						<li ng-class="{'active': Status == 'favourites'}" ng-click="categoryListempty()"><a data-toggle="tab" ng-click="reportlist('favourites')" herf="#menu2" class="fb-fav"><span class="fp-tab-icon icon-fp-icon-fav"></span></a></a></li>
+						<!-- <li><a data-toggle="tab" ng-click="reportlist('requestaccess')" herf="#menu3" class="fb-acs"><span class="fp-tab-icon icon-fp-icon-acs"></span></a></a></li> -->
+					</ul>
+
+
+
+
+
+			<div class="tab-content fp-tab-content  mCustomScrollbar" ng-scrollbars ng-scrollbars-config="scrollbarConfig">
+
+					<div ng-show="reportDisplay==true" class="tab-pane fade in active"  >
+					<ul class="fp-menu">
+						<li ng-click="categoryListClick(18,'Action Tracker','http://mobileserver.flextronics.com/pulsenavigation/images/sideicons/action_tracker.png')">
+							<a herf="">
+								<img src="http://mobileserver.flextronics.com/pulsenavigation/images/sideicons/action_tracker.png" class="menu-icon" alt="menu icon">
+								<span class="">Action Tracker</span>
+							</a>
+
+							<div class="menu-tools pull-right" ng-show="userStatus=='Admin'">
+								<button type="button" class="btn btn-menu-tool" ><span class="fp-icon icon-fp-icon-edit"></span></button>
+								<button type="button" class="btn btn-menu-tool" ><span class="fp-icon icon-fp-icon-delete"></span></button>
+							</div>
+						</li>
+					</ul>
+					<div class="fp-menu-header">
+						<h3 class="fp-menu-title">Reports</h3>
+						<!-- tools box -->
+						<div ng-show="userStatus=='Admin'" class="fp-title-add pull-right">
+							<button type="button" class="btn btn-add" ng-click="fileUploadMethod()">
+								<span  class="icon-fp-icon-add"> Add</span>
+							</button>
+							<input type="file"   file-model = "myFile" name="screenShotUploader"  id="screenShotUploaderID">
+						</div>
+					</div>
+					<ul  class="fp-menu">
+						<li ng-repeat="x in categoryList" class="side-panel" ng-click="categoryListClick(x.category_id,x.category_name,x.category_icon_url)">
+							<a herf="#">
+								<img src="{{x.category_icon_url}}" class="menu-icon" alt="menu icon">
+								<span class="">{{x.category_name}}</span>
+							</a>
+							<div ng-show="userStatus=='Admin'" class="menu-tools pull-right">
+								<button type="button" class="btn btn-menu-tool" ><span class="fp-icon icon-fp-icon-edit"></span></button>
+								<button type="button" class="btn btn-menu-tool" ><span class="fp-icon icon-fp-icon-delete"></span></button>
+							</div>
+						</li>
+					</ul>
+					</div>
+
+
+					<div ng-show="reportDisplay==false" class="tab-pane fade in active" >
+						<ul class="fp-menu">
+							<!-- <li ng-click="categoryListClick(18,'Action Tracker','http://mobileserver.flextronics.com/pulsenavigation/images/sideicons/action_tracker.png')">
+								<a herf="" >
+									<img src="http://mobileserver.flextronics.com/pulsenavigation/images/sideicons/action_tracker.png" class="menu-icon" alt="menu icon">
+									<span class="">Action Tracker Dashboard</span>
+								</a>
+								<div ng-show="userStatus=='Admin'" class="menu-tools pull-right">
+									<button type="button" class="btn btn-menu-tool" ><span class="fp-icon icon-fp-icon-edit"></span></button>
+									<button type="button" class="btn btn-menu-tool" ><span class="fp-icon icon-fp-icon-delete"></span></button>
+								</div>
+							</li> -->
+						</ul>
+					<div>
+					<div>
+						<!-- <div class="fp-menu-header">
+						<h3 class="fp-menu-title">Reports</h3>
+						
+						</div> -->
+						 <ul  class="fp-menu side-panel" ng-repeat="x in favouriteList | filter:{'category_type':  'Action'}:true | unique : 'category_name'" >
+						<!-- <ul  class="fp-menu" ng-repeat="x in favouriteList | unique : category_name" > -->
+						<li ng-click="favFilter(x)" >
+							<a herf="#">
+								<img src="{{x.category_icon_url}}" class="menu-icon" alt="menu icon">
+								<span class="">{{x.category_name}}</span>
+							</a>
+						</li>
+					</ul>
+
+
+					</div>
+					<ul  class="fp-menu">
+						<li ng-click="emptyChange()">
+							<a herf="#">
+								<img src="images/sideicon/icon1.png" class="menu-icon" alt="menu icon">
+								<span class="">All</span>
+							</a>
+						</li>
+					</ul>
+
+					</div>
+					<div>
+						<div class="fp-menu-header">
+						<h3 class="fp-menu-title">Reports</h3>
+						<!-- tools box -->
+						</div>
+						 <ul  class="fp-menu side-panel" ng-repeat="x in favouriteList | filter:{'category_type':  'Report'}:true | unique : 'category_name'" >
+						<!-- <ul  class="fp-menu" ng-repeat="x in favouriteList | unique : category_name" > -->
+						<li ng-click="favFilter(x)" >
+							<a herf="#">
+								<img src="{{x.category_icon_url}}" class="menu-icon" alt="menu icon">
+								<span class="">{{x.category_name}}</span>
+							</a>
+						</li>
+					</ul>
+
+
+						<!-- <ul class="fp-alltab-menu" ng-repeat="x in favouriteList |  filter:{'category_type':  'Report'}:true">
+							<li ng-click="favFilter(x)">
+							<div class="menu-info">
+								<h4 class="control-sidebar-subheading">{{x.category_name}}</h4>
+							</div>
+							</li>
+						</ul> -->
+					</div>
+					<div>
+						<div class="fp-menu-header">
+						<h3 class="fp-menu-title">Links</h3>
+						<!-- tools box -->
+						</div>
+						<ul  class="fp-menu side-panel" ng-repeat="x in favouriteList | filter:{'category_type':  'Common'}:true | unique : 'category_name'">
+						<li ng-click="favFilter(x)">
+							<a herf="#">
+								<img src="{{x.category_icon_url}}" class="menu-icon" alt="menu icon">
+								<span class="">{{x.category_name}}</span>
+							</a>
+						</li>
+					</ul>
+
+					<!-- 	<ul class="fp-alltab-menu" ng-repeat="x in favouriteList | filter:{'category_type':  'Common'}:true">
+						<li>
+						<div class="menu-info">
+						<h4 class="control-sidebar-subheading">{{x.category_name}}</h4>
+
+						</div>
+						</li>
+						</ul> -->
+					</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+		<div class="fp-mainbar">
+			<div class="fp-header">
+				<nav class="navbar">
+				  <div class="container-fluid">
+					<div class="navbar-custom-menu pull-right" >
+						<ul class="nav navbar-nav menu-left">
+						  <li class="custom-menu-item"><a href="https://snc.flextronics.com" target="_blank">Support</a></li>
+						  
+						  <li class="custom-menu-item"><a href="#">Help</a></li>
+						</ul>
+						<ul class="nav navbar-nav navbar-right menu-right">
+							<li class="dropdown user-detail">
+								<button class="btn dropdown-toggle btn-userlogin" type="button" data-toggle="dropdown">{{username}}	<span class="caret"></span>
+								</button>
+								<ul class="dropdown-menu">
+								  <li><a ng-click="logout()">Logout</a></li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+				  </div>
+				</nav>
+			</div>
+			<main ui-view="subview" class="fp-content"></main>
+			</div>
+		</div>

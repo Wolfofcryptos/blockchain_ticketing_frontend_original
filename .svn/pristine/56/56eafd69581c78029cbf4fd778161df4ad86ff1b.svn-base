@@ -1,0 +1,7 @@
+<div>{{favouriteFilter}}</div>
+<ul>
+<li ng-repeat="x in favouriteList | filter: (true ? {'category_id': favouriteFilter} : '') ">
+{{x.report_title}}
+</li>
+</ul>
+ <!-- filter:{}|| {favouriteFilter : undefined }:true -->

@@ -1,0 +1,7 @@
+var readmoreController = pulseapp.controller('readmoreController', function ($scope, $rootScope,$mdDialog) {
+
+
+	 // $scope.cancel = function() {
+  //     $mdDialog.cancel();
+  //   };
+});

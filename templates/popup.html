@@ -1,0 +1,33 @@
+<div class="wrapper" ng-controller="changepwd">
+
+	<header class="popuphead">
+	<p>Change Password</p>
+	<hr class="popuphr">
+	</header>
+	
+
+	<div class="form-content">
+	<div class="profileholder">
+	
+	<label>Old Password:</label>
+	<input type="password" name="newpwd" ng-model="oldpwd" placeholder="Old password">
+	<div class="clear"></div>
+	<label>Password:</label>
+	<input type="password" name="pwd" ng-model="pwdchange"placeholder="New password">
+	<div class="clear"></div>
+	<label>Confirm Password:</label>
+	<input type="password" name="confirmpwd" ng-model="pwdconfirmChange" placeholder="Confirm Password">
+	<div class="clear"></div>
+	</div>
+
+
+	
+	
+
+	<div class="button">
+		<button ng-click="save()">Save</button>
+			
+	</div>
+	
+</div>
+</div>

@@ -1,0 +1,41 @@
+var db = require('seriate');
+
+
+
+// SQL Server and database config
+var config = {
+
+	   "Driver":"SQL Server Native Client 11.0",
+     "server": "GSSNTE808.asia.ad.flextronics.com",
+      "user": "mobileux_coe",
+	   "port":"1433",
+     "password": "mobile@432",
+     "database": "pulsenavigation",
+
+	options: {
+        encrypt: true // Use this if you're on Windows Azure
+    }
+};
+
+
+db.setDefaultConfig( config );
+db.stream = true;
+
+exports.getCategory =  function(req,res){
+			db.execute( {
+						query: "SELECT * FROM [pulsenavigation].[dbo].[category] where flag='Y' and category_type=@categoryType",
+						params: {
+			            categoryType: {
+			                type: db.NVARCHAR,
+			                val: req.param('types')
+			            }
+			        }
+				} ).then( function( results ) {
+
+						console.log( results );
+						res.send({'category_list':results});
+				}, function( err ) {
+						console.log( "Something bad happened:", err );
+				} );
+
+};

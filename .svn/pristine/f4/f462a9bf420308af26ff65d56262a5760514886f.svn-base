@@ -1,0 +1,13 @@
+/*
+
+
+
+*/
+reportMainController
+
+var reportMainController = pulseapp.controller('reportMainController', function ($scope, $rootScope) {    
+
+
+
+
+});

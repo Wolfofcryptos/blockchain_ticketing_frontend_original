@@ -1,0 +1,513 @@
+var db = require('seriate');
+var moment = require("moment");
+
+
+// SQL Server and database config
+var config = {
+
+	  "Driver":"SQL Server Native Client 11.0",
+     "server": "GSSNTE808.asia.ad.flextronics.com",
+      "user": "mobileux_coe",
+	   "port":"1433",
+     "password": "mobile@432",
+    "database": "pulsenavigation",
+	 //"Driver":"SQL Server Native Client 11.0",
+     //"server": "SACSQLV10.americas.ad.flextronics.com\\sql1",
+     //"user": "flexpulse",
+    //"port":"1433",
+     //"password": "93773pulsefl3x",
+     //"database": "pulsenavigation",
+
+	options: {
+        encrypt: true // Use this if you're on Windows Azure
+    }
+};
+
+
+db.addConnection(config);
+db.stream = true;
+
+var getCategorywithCode = function(req,res,results){
+	//res.send(results[0].WhereCondition);
+	var str = '';
+	(results != '')? str = results[0].WhereCondition : str = '';
+	db.execute( {
+						query: "SELECT * FROM [pulsenavigation].[dbo].[category] where flag='Y' and category_type='"+req.param('category_type') +"'"+str,
+						params: {
+			            categoryType: {
+			                type: db.NVARCHAR,
+			                val: req.param('category_type')
+			            },
+						 categoryCode: {
+			                type: db.NVARCHAR,
+			                val: req.param('category_code')
+			            }
+			        }
+				} ).then(function(results){
+					res.send({'files':results});
+				}, function( err ) {
+						console.log( "Something bad happened:", err );
+				} );
+}
+
+// Get Category list
+exports.getCategory =  function(req,res){
+
+
+	var str='';
+	if(req.param('category_code')!=''){
+
+		//res.send("SELECT Distinct (Select dbo.Split1("+req.param('category_code')+",',')) As WhereCondition    FROM [pulsenavigation].[dbo].[category]");
+		db.execute( {
+						query: "SELECT Distinct (Select dbo.Split1("+req.param('category_code')+",',')) As WhereCondition    FROM [pulsenavigation].[dbo].[category]",
+						params: {
+			            categoryType: {
+			                type: db.NVARCHAR,
+			                val: req.param('category_type')
+			            },
+						 categoryCode: {
+			                type: db.NVARCHAR,
+			                val: req.param('category_code')
+			            }
+			        }
+				} ).then(function(results){
+					//res.send({'files':results});
+					getCategorywithCode(req,res,results);
+				}, function( err ) {
+						console.log( "Something bad happened:", err );
+				} );
+
+
+
+
+	}else{
+		getCategorywithCode(req,res,'');
+	}
+
+
+};
+
+
+
+
+//Get Report Details
+exports.getReportDetails = function(req,res){
+	db.execute( {
+				query: "SELECT report_id, report_title,report_url,report_icon_url,report_description,category_id,training_doc_url,training_video_url, CASE   WHEN  exists (select report_id from dbo.favourites where dbo.favourites.report_id=dbo.report_detail.report_id and adid=@adId and flag='Y')  THEN 1     ELSE 0        END as Fav FROM dbo.report_detail where category_id=@categoryId and flag='Y'",
+				params: {
+							categoryId: {
+									type: db.NVARCHAR,
+									val: req.param('category_id')
+							},
+							adId: {
+									type: db.NVARCHAR,
+									val: req.param('adid')
+							}
+					}
+		} ).then(function(results){
+			res.send({'files':results});
+		}, function( err ) {
+				console.log( "Something bad happened:", err );
+		} );
+
+}
+
+//Get Favourites listen
+var getFavourites = function(req,res,results){
+
+	var str = '';
+	(results != '')? str = results[0].WhereCondition : str = '';
+	db.execute( {
+				query: "SELECT rep.report_id,rep.report_title,rep.report_description,rep.report_url,rep.report_icon_url,rep.training_doc_url,rep.training_video_url,cat.category_id,category_name,cat.category_icon_url,cat.category_type FROM dbo.report_detail rep INNER JOIN dbo.favourites fav ON rep.report_id=fav.report_id INNER JOIN dbo.category cat on cat.category_id = fav.category_id where fav.flag='Y' and fav.adid=@adID" + str,
+				params: {
+							adId: {
+									type: db.NVARCHAR,
+									val: req.param('adid')
+							}
+					}
+
+		} ).then(function(results){
+			res.send({'files':results});
+		}, function( err ) {
+				console.log( "Something bad happened:", err );
+		} );
+
+}
+
+exports.deleteFav = function(req,res){
+	db.execute( {
+				query: "UPDATE [pulsenavigation].[dbo].[favourites]  SET [flag] = 'N' where category_id=@category_id AND report_id = @report_id AND adid = @adid AND flag = 'Y'",
+					params: {
+							category_id: {
+									type: db.NVARCHAR,
+									val: req.param('category_id')
+							},
+							report_id: {
+									type: db.NVARCHAR,
+									val: req.param('report_id')
+							},
+							adid: {
+									type: db.NVARCHAR,
+									val: req.param('adid')
+							},
+
+					}
+		} ).then(function(results){
+			res.send('success');
+		}, function( err ) {
+				console.log( "Something bad happened:", err );
+		} );
+}
+
+exports.addFav = function(req,res){
+
+	db.execute( {
+				query: "INSERT INTO [pulsenavigation].[dbo].[favourites]([category_id] ,[report_id] ,[adid] ,[flag])VALUES (@category_id,@report_id,@adid,@flag)",
+					params: {
+							category_id: {
+									type: db.NVARCHAR,
+									val: req.param('category_id')
+							},
+							report_id: {
+									type: db.NVARCHAR,
+									val: req.param('report_id')
+							},
+							adid: {
+									type: db.NVARCHAR,
+									val: req.param('adid')
+							},
+							flag: {
+									type: db.NVARCHAR,
+									val: 'Y'
+							}
+					}
+		} ).then(function(results){
+			res.send('success');
+		}, function( err ) {
+				console.log( "Something bad happened:", err );
+		} );
+}
+
+// Add Report
+exports.addReport =  function(req,res){
+	db.execute( {
+				query: "INSERT INTO [pulsenavigation].[dbo].[report_detail]  ([report_title]  ,[report_url]  ,[report_description] ,[report_icon_url]   ,[category_id]  ,[flag] ,[created_by] ,[training_doc_url] ,[training_video_url])"
+									+"      VALUES  (@report_title,@report_url  ,@report_desc ,@icon_url   ,@category_id   ,'Y'  ,@user_id   ,@doc_url  ,@video_url)",
+				params: {
+							report_title: {
+									type: db.NVARCHAR,
+									val: req.param('report_title')
+							},
+							report_url: {
+									type: db.NVARCHAR,
+									val: req.param('report_url')
+							},
+							report_desc: {
+									type: db.NVARCHAR,
+									val: req.param('report_desc')
+							},
+							icon_url: {
+									type: db.NVARCHAR,
+									val: req.param('icon_url')
+							},
+							category_id: {
+									type: db.NVARCHAR,
+									val: req.param('category_id')
+							},
+							user_id: {
+									type: db.NVARCHAR,
+									val: req.param('user_id')
+							},
+							doc_url: {
+									type: db.NVARCHAR,
+									val: req.param('doc_url')
+							},
+							video_url: {
+									type: db.NVARCHAR,
+									val: req.param('video_url')
+							}
+					}
+		} ).then(function(results){
+			res.send('success');
+		}, function( err ) {
+				console.log( "Something bad happened:", err );
+		} );
+
+}
+
+
+// Edit Report
+exports.editReport =  function(req,res){
+	var now = moment(new Date());
+
+  var date = now.format("YYYY-MM-D HH:mm");
+
+			db.execute( {
+						query: "UPDATE [pulsenavigation].[dbo].[report_detail]   SET [report_title] = @report_title  ,[report_url] = @report_url  ,[report_description] = @report_desc      ,[report_icon_url] = @icon_url      ,[updated_by] = @user_id      ,[updated_on] = '"+date+" '     ,[training_doc_url] = @doc_url      ,[training_video_url] = @video_url  WHERE report_id=@report_id",
+						params: {
+							report_title: {
+									type: db.NVARCHAR,
+									val: req.param('report_title')
+							},
+							report_url: {
+									type: db.NVARCHAR,
+									val: req.param('report_url')
+							},
+							report_desc: {
+									type: db.NVARCHAR,
+									val: req.param('report_desc')
+							},
+							icon_url: {
+									type: db.NVARCHAR,
+									val: req.param('icon_url')
+							},
+							report_id: {
+									type: db.NVARCHAR,
+									val: req.param('report_id')
+							},
+							user_id: {
+									type: db.NVARCHAR,
+									val: req.param('user_id')
+							},
+							doc_url: {
+									type: db.NVARCHAR,
+									val: req.param('doc_url')
+							},
+							video_url: {
+									type: db.NVARCHAR,
+									val: req.param('video_url')
+							}
+			        }
+				} ).then(function(results){
+					res.send('success');
+				}, function( err ) {
+						console.log( "Something bad happened:", err );
+				} );
+
+}
+
+
+// Delete Report
+exports.deleteReport =  function(req,res){
+	var now = moment(new Date());
+
+	var date = now.format("YYYY-MM-D HH:mm");
+	db.execute( {
+				query: "UPDATE [pulsenavigation].[dbo].[report_detail]   SET [flag] = 'N'      ,[updated_by]=@user_id      ,[updated_on]='"+date+"' WHERE report_id=@report_id;",
+				params: {
+
+					user_id: {
+							type: db.NVARCHAR,
+							val: req.param('user_id')
+					},
+
+					report_id: {
+							type: db.NVARCHAR,
+							val: req.param('report_id')
+					}
+					}
+		} ).then(function(results){
+			res.send('success');
+		}, function( err ) {
+				console.log( "Something bad happened:", err );
+		} );
+
+}
+
+// Undo Report
+exports.undoReport =  function(req,res){
+	var now = moment(new Date());
+
+	var date = now.format("YYYY-MM-D HH:mm");
+	db.execute( {
+				query: "UPDATE [pulsenavigation].[dbo].[report_detail]   SET [flag] = 'Y'      ,[updated_by]=@user_id      ,[updated_on]='"+date+"' WHERE report_id=@report_id;",
+				params: {
+
+					user_id: {
+							type: db.NVARCHAR,
+							val: req.param('user_id')
+					},
+
+					report_id: {
+							type: db.NVARCHAR,
+							val: req.param('report_id')
+					}
+					}
+		} ).then(function(results){
+			res.send('success');
+		}, function( err ) {
+				console.log( "Something bad happened:", err );
+		} );
+
+}
+
+
+// Add Category
+exports.addCategory =  function(req,res){
+
+	db.execute( {
+				query: "INSERT INTO [pulsenavigation].[dbo].[category]  ([category_name] ,[editable_flag]  ,[flag]  ,[created_by]  ,[category_type]   ,[category_icon_url]   ,[category_code])"
+     							+" VALUES   (@category_name   ,'Y' ,'Y'  ,@user_id  ,@category_type  ,@icon_url ,@category_code)",
+				params: {
+					category_name: {
+							type: db.NVARCHAR,
+							val: req.param('category_name')
+					},
+					category_type: {
+							type: db.NVARCHAR,
+							val: req.param('category_type')
+					},
+
+					icon_url: {
+							type: db.NVARCHAR,
+							val: req.param('icon_url')
+					},
+
+					user_id: {
+							type: db.NVARCHAR,
+							val: req.param('user_id')
+					},
+					category_code: {
+							type: db.NVARCHAR,
+							val: req.param('category_code')
+					}
+					}
+		} ).then(function(results){
+			res.send('sucess');
+		}, function( err ) {
+				console.log( "Something bad happened:", err );
+		} );
+
+}
+
+//Edit Category
+exports.editCategory =  function(req,res){
+	var now = moment(new Date());
+
+	var date = now.format("YYYY-MM-D HH:mm");
+	db.execute( {
+				query: "UPDATE [pulsenavigation].[dbo].[category] SET [category_name] = @category_name,[updated_by] = @user_id  ,[category_code] = @category_code,[updated_on] = '"+date+"'     ,[category_icon_url] = @icon_url WHERE category_id=@category_id",
+				params: {
+					category_name: {
+							type: db.NVARCHAR,
+							val: req.param('category_name')
+					},
+					icon_url: {
+							type: db.NVARCHAR,
+							val: req.param('icon_url')
+					},
+
+					user_id: {
+							type: db.NVARCHAR,
+							val: req.param('user_id')
+					},
+					category_id: {
+							type: db.NVARCHAR,
+							val: req.param('category_id')
+					},
+					category_code: {
+							type: db.NVARCHAR,
+							val: req.param('category_code')
+					}
+					}
+		} ).then(function(results){
+			res.send('success');
+		}, function( err ) {
+				console.log( "Something bad happened:", err );
+		} );
+
+}
+// Delete Category
+exports.deleteCategory =  function(req,res){
+	var now = moment(new Date());
+
+	var date = now.format("YYYY-MM-D HH:mm");
+	db.execute( {
+				query: "UPDATE [pulsenavigation].[dbo].[category]   SET [flag] = 'N'      ,[updated_by]=@user_id      ,[updated_on]='"+date+"' WHERE category_id=@category_id",
+				params: {
+
+					user_id: {
+							type: db.NVARCHAR,
+							val: req.param('user_id')
+					},
+					category_id: {
+							type: db.NVARCHAR,
+							val: req.param('category_id')
+					}
+					}
+		} ).then(function(results){
+			res.send('success');
+		}, function( err ) {
+				console.log( "Something bad happened:", err );
+		} );
+
+}
+
+//Get Active category list
+var getActiveCategory =  function(req,res, results){
+	var str = '';
+	(results != '')? str = results[0].WhereCondition : str = '';
+
+	db.execute( {
+	query: "select a.category_id,category_name,CASE   WHEN  exists (select b.category_id from dbo.category b where a.category_id=b.category_id "+str+" and flag='Y') THEN 1     ELSE 0        END as UserCat,(select url from [dbo].[request_url]) as Requesturl from dbo.category a where category_type='Report' and flag='Y' order by UserCat desc ",
+	params: {
+
+	category_code: {
+	type: db.NVARCHAR,
+	val: req.query.category_code
+	}
+
+	}
+	} ).then(function(results){
+	res.send({'files':results});
+	}, function( err ) {
+	console.log( "Something bad happened:", err );
+	} );
+
+}
+
+exports.getPulseRecords = function(req,res){
+	var str='';
+	if(req.param('category_code')!=''){
+
+		//res.send("SELECT Distinct (Select dbo.Split1("+req.param('category_code')+",',')) As WhereCondition    FROM [pulsenavigation].[dbo].[category]");
+		db.execute( {
+						query: "SELECT Distinct (Select dbo.Split1("+req.param('category_code')+",',')) As WhereCondition    FROM [pulsenavigation].[dbo].[category]",
+						params: {
+			            categoryType: {
+			                type: db.NVARCHAR,
+			                val: req.param('category_type')
+			            },
+						 categoryCode: {
+			                type: db.NVARCHAR,
+			                val: req.param('category_code')
+			            }
+			        }
+				} ).then(function(results){
+					//res.send({'files':results});
+					if(req.param('request_type') == 'favourites')
+					{
+						getFavourites(req,res,results);
+					}
+					if(req.param('request_type') == 'activecategories')
+					{
+						getActiveCategory(req,res,results);
+					}
+				}, function( err ) {
+						console.log( "Something bad happened:", err );
+				} );
+
+
+
+
+	}else{
+		if(req.param('request_type') == 'favourites')
+					{
+						getFavourites(req,res,'');
+					}
+					if(req.param('request_type') == 'activecategories')
+					{
+						getActiveCategory(req,res,'');
+					}
+	}
+}

@@ -1,0 +1,71 @@
+/*
+
+
+
+*/
+
+
+var favouritesController = pulseapp.controller('favouritesController', function ($scope, $rootScope,PulseData,$location) {
+		//$scope.favouriteList=[];
+		$rootScope.favouriteList=[];
+		$scope.requestParam='';
+
+		$scope.favouriteListDetails = function (){
+
+			$scope.isVisibleList='loader';
+
+			$scope.requestType="getFavourites";
+
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessfavouriteList,$scope.OnfailurefavouriteList)
+
+		}
+
+		$scope.OnSuccessfavouriteList = function(response) {
+
+		$rootScope.favouriteList=response.data.files;
+		PulseData.setCategoryTitle("All");
+		$scope.isVisibleList='list';
+
+		//$rootscope.favouriteSideList=response.data.files;
+
+
+	}
+
+	$scope.OnfailurefavouriteList=function(response){
+
+		console.log("Favourite List HTTP Fail");
+	}
+    
+    $scope.favouriteRemove = function(index,listval){
+        $scope.requestType="deleteFav";
+        $scope.requestParam={category_id :listval.category_id,report_id : listval.report_id, adid: $rootScope.userId};
+       
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessDelFavourties,$scope.OnfailureDelFavourites);
+       $rootScope.favouriteList.splice(index,1);         
+    }
+    
+    $scope.OnSuccessDelFavourties = function(response){
+    console.log("fav-tab-removed");
+    
+    }
+    $scope.OnfailureDelFavourites = function(){
+    
+     console.log("fav-tab-remove failed");
+    }
+    
+
+
+	$scope.init = function(){
+
+		//if($location.hash=="/favourites"){
+			$scope.favouriteListDetails();
+		//}else{
+		//	window.location.hash=$location.hash;
+		//}
+		
+
+
+	}
+	$scope.init();
+
+});

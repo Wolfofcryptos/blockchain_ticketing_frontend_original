@@ -1,0 +1,6 @@
+<ul>
+<li ng-repeat="x in reportDetails">
+{{x.report_title}}
+</li>
+
+</ul>

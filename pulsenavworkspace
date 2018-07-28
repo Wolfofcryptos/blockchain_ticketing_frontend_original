@@ -1,0 +1,72 @@
+<NotepadPlus>
+    <Project name="Project Name">
+        <Folder name="css">
+            <Folder name="bootstrap">
+                <File name="css\bootstrap\bootstrap.css" />
+                <File name="css\bootstrap\bootstrap.min.css" />
+            </Folder>
+            <File name="css\icomoon.css" />
+            <File name="css\styles.css" />
+        </Folder>
+        <Folder name="fonts">
+            <File name="fonts\icomoon.eot" />
+            <File name="fonts\icomoon.svg" />
+            <File name="fonts\icomoon.ttf" />
+            <File name="fonts\icomoon.woff" />
+        </Folder>
+        <Folder name="images">
+            <Folder name="sideicon">
+                <File name="images\sideicon\icon1.png" />
+                <File name="images\sideicon\icon3.png" />
+                <File name="images\sideicon\icon4.png" />
+                <File name="images\sideicon\icon5.png" />
+                <File name="images\sideicon\icon6.png" />
+                <File name="images\sideicon\icon7.png" />
+                <File name="images\sideicon\icon8.png" />
+                <File name="images\sideicon\icons2.png" />
+                <File name="images\sideicon\tabactive_icon1.png" />
+                <File name="images\sideicon\tabactive_icon2.png" />
+                <File name="images\sideicon\tabactive_icon3.png" />
+                <File name="images\sideicon\tabactive_icon4.png" />
+                <File name="images\sideicon\tab_icon1.png" />
+                <File name="images\sideicon\tab_icon2.png" />
+                <File name="images\sideicon\tab_icon3.png" />
+                <File name="images\sideicon\tab_icon4.png" />
+            </Folder>
+            <File name="images\loader.gif" />
+            <File name="images\logo.png" />
+            <File name="images\report_icon1.png" />
+        </Folder>
+        <Folder name="js">
+            <Folder name="controller">
+                <File name="js\controller\FavouritesController.js" />
+                <File name="js\controller\LinkController.js" />
+                <File name="js\controller\PulseController.js" />
+                <File name="js\controller\ReportController.js" />
+                <File name="js\controller\RequestAccessController.js" />
+            </Folder>
+            <Folder name="library">
+                <File name="js\library\angular-animate.js" />
+                <File name="js\library\angular-route.min.js" />
+                <File name="js\library\angular.min.js" />
+                <File name="js\library\bootstrap.js" />
+                <File name="js\library\bootstrap.min.js" />
+            </Folder>
+            <Folder name="modules" />
+            <Folder name="services">
+                <File name="js\services\PulseNavigationService.js" />
+            </Folder>
+            <File name="js\app.js" />
+        </Folder>
+        <Folder name="templates">
+            <File name="templates\FavouritesList.html" />
+            <File name="templates\LinksList.html" />
+            <File name="templates\ReportAccessTab.html" />
+            <File name="templates\ReportList.html" />
+        </Folder>
+        <File name="index.html" />
+        <File name="index1.html" />
+        <File name="Pulse Navigation Portal Mockup V1.pptx" />
+        <File name="sample.html" />
+    </Project>
+</NotepadPlus>

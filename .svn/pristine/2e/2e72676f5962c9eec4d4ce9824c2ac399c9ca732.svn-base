@@ -1,0 +1,48 @@
+/*
+
+
+
+*/
+
+
+var requestaccessController = pulseapp.controller('requestaccessController', function ($scope, $rootScope,PulseData,ngProgressFactory) {  
+
+$scope.CategoryCode=sessionStorage.getItem('AccessCodes');  
+$scope.requestList=[];
+$scope.data=PulseData.dat;
+
+
+$scope.requestaccess= function(){
+
+	$scope.requestParam={category_code :$scope.CategoryCode,request_type:'activecategories'};
+	$scope.requestType="getPulseRecords";
+	PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessRequestAccess,$scope.OnfailureRequestAccess)
+
+
+}
+
+
+$scope.OnSuccessRequestAccess = function(response){
+
+	$scope.requestList=response.data.files;
+	$scope.progressbar.complete();
+
+
+}
+
+$scope.OnfailureRequestAccess = function(){
+
+	console.log("Request Access Failed");
+	//$scope.progressbar.complete();
+}
+
+$scope.init = function(){
+	$scope.progressbar = ngProgressFactory.createInstance();
+	 $scope.progressbar.start();
+$scope.requestaccess();
+
+}
+
+$scope.init();
+
+});

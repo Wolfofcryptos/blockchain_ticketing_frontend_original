@@ -1,0 +1,95 @@
+<!-- <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog"> -->
+    <div class="readmore-popup">
+      <!-- Modal content-->
+      <div class="modal-content fp-modal-content">
+        <div class="modal-header fp-modal-header">
+          <button type="button" class="close" data-dismiss="modal" ng-click="cancel()"><span class="fp-icon icon-fp-icon-cancel"></span></button>
+          <h4 class="modal-title fp-modal-title">Add</h4>
+        </div>
+        <div class="modal-body fp-modal-body">
+	<div class="fp-modal-box" >
+	<!-- .info-box-content -->
+	<div class="modal-box-content-edit">
+  <!-- <div class="sam">
+    <md-input-container>
+  <label>Report Description:</label>
+  <textarea >{{editdesc}}</textarea>
+  </md-input-container>
+  </div> -->
+  <div class="form-horizontal">
+    <div class="form-group fp-form-group" ng-show="typeValue=='Report'">
+      <label class="control-label col-sm-4" for="rpt_name">Report Name :</label>
+      <div class="col-sm-8 fp-form">          
+        <input type="text" class="form-control" id="rpt_name" placeholder="Enter report name" name='reportTitle' ng-model='addName'>
+		<span class = "help-block"> ({{editname.length}}/25) </span>
+      </div>
+    </div>
+     <div class="form-group fp-form-group" ng-show="typeValue=='Category'">
+      <label class="control-label col-sm-4" for="rpt_name">Category Name :</label>
+      <div class="col-sm-8 fp-form">          
+        <input type="text" class="form-control" id="rpt_name" placeholder="Enter Category name" name='reportTitle' ng-model='addCatName'>
+    <span class = "help-block"> ({{editname.length}}/25) </span>
+      </div>
+
+    </div>
+	<div class="form-group fp-form-group" ng-show="typeValue=='Report'">
+      <label class="control-label col-sm-4" for="pwd">Report Url :</label>
+      <div class="col-sm-8 fp-form">          
+        <input type="text" class="form-control" id="pwd" placeholder="Enter Report Url" name='reportUrl' ng-model='addUrl'>
+      </div>
+    </div>
+	<div class="form-group fp-form-group" ng-show="typeValue=='Report'">
+      <label class="control-label col-sm-4" for="pwd">Report Description :</label>
+      <div class="col-sm-8 fp-form">          
+		<textarea class = "form-control" id="" rows = "3" placeholder="Enter Description" ng-model='addDesc'></textarea>
+      </div>
+    </div>
+	<div class="form-group fp-form-group">
+      <label class="control-label col-sm-4" for="pwd">Image Icon :</label>
+		<div class="col-sm-8 fp-form">  
+		  <div class="input-group">
+					<label class="btn btn-upload">
+						 <input type="file" file-model="filename" >
+             <button progress-button="progressFunction()" pb-direction="vertical"></button>
+					</label>
+		  </div>
+		</div>
+    </div>
+    <div class="form-group fp-form-group" ng-show="typeValue=='Category'">
+      <label class="control-label col-sm-4" for="rpt_name">Category Code :</label>
+      <div class="col-sm-8 fp-form">          
+        <input type="text" class="form-control" id="rpt_name" placeholder="Enter Category Code" name='reportTitle' ng-model='addCatCode'>
+    
+      </div>
+    </div>
+	<div class="form-group fp-form-group" ng-show="typeValue=='Report'">
+      <label class="control-label col-sm-4" for="pwd">Report Document Url :</label>
+      <div class="col-sm-8 fp-form">          
+        <input type="text" class="form-control" id="pwd" name='reportDocUrl' placeholder="Enter Doc Url" ng-model='addDocurl'>
+      </div>
+    </div>
+	<div class="form-group fp-form-group" ng-show="typeValue=='Report'">
+      <label class="control-label col-sm-4" for="pwd">Report Video Url :</label>
+      <div class="col-sm-8 fp-form">          
+        <input type="type" class="form-control" id="pwd" placeholder="Enter Video Url" name='reportVideoUrl' ng-model='addVideourl'>
+      </div>
+    </div>
+  </div>
+	</div>
+	<!-- /.info-box-content -->
+	</div>
+        </div>
+        <div class="modal-footer fp-modal-footer">
+            <button type="submit" class="btn btn-save" ng-click="addSave()"> 
+            <span ng-show="searchButtonText == 'Searching'"><i class="glyphicon glyphicon-repeat fast-right-spinner"></i></span>
+          Save
+        </button>
+         <!--  <button type="button" class="btn btn-launch" data-dismiss="modal"  ng-click="editSave"><a>Save</a></button> -->
+        </div>
+      </div>
+      
+   </div>
+  <!--</div> -->
+
+   <!-- ng-show="isVisibleList == 'loader'" -->

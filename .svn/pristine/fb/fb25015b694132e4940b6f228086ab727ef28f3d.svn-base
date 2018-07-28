@@ -1,0 +1,13 @@
+/*
+
+
+
+*/
+
+
+var favouritesController = pulseapp.controller('favouritesController', function ($scope, $rootScope) {    
+
+
+
+
+});

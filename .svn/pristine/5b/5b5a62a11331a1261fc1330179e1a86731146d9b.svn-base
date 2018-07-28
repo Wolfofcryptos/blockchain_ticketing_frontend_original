@@ -1,0 +1,74 @@
+/*
+
+
+
+*/
+
+
+var favouritesController = pulseapp.controller('favouritesController', function ($scope, $rootScope,PulseData,$location,ngProgressFactory) {
+		//$scope.favouriteList=[];
+		$rootScope.favouriteList=[];
+		
+		$rootScope.favAnime=true;
+
+		$scope.favouriteListDetails = function (){
+
+			$scope.isVisibleList='loader';
+
+			$scope.requestType="getFavourites";
+			$scope.requestParam={adid :$rootScope.userId};
+
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessfavouriteList,$scope.OnfailurefavouriteList)
+
+		}
+
+		$scope.OnSuccessfavouriteList = function(response) {
+
+		$rootScope.favouriteList=response.data.files;
+		PulseData.setCategoryTitle("All");
+		PulseData.setCategoryIcon("images/sideicon/icon1.png");
+		$scope.isVisibleList='list';
+		$scope.progressbar.complete();
+		//$rootscope.favouriteSideList=response.data.files;
+
+
+	}
+
+	$scope.OnfailurefavouriteList=function(response){
+
+		console.log("Favourite List HTTP Fail");
+	}
+    
+    $scope.favouriteRemove = function(index,listval){
+    	//$rootScope.favAnime=true;
+    	console.log($rootScope.favAnime);
+        $scope.requestType="deleteFav";
+        $scope.requestParam={category_id :listval.category_id,report_id : listval.report_id, adid: $rootScope.userId};
+       
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessDelFavourties,$scope.OnfailureDelFavourites);
+       $rootScope.favouriteList.splice(index,1);         
+    }
+    
+    $scope.OnSuccessDelFavourties = function(response){
+    console.log("fav-tab-removed");
+    
+    }
+    $scope.OnfailureDelFavourites = function(){
+    
+     console.log("fav-tab-remove failed");
+    }
+    
+
+
+	$scope.init = function(){
+
+		//	$scope.progressbar = ngProgressFactory.createInstance();
+        // 	$scope.progressbar.start();
+			$scope.favouriteListDetails();
+		
+
+
+	}
+	$scope.init();
+
+});

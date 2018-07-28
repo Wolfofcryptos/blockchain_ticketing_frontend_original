@@ -1,0 +1,123 @@
+/*
+
+
+
+*/
+
+
+var favouritesController = pulseapp.controller('favouritesController', function ($scope, $rootScope,PulseData,$location,ngProgressFactory) {
+		//$scope.favouriteList=[];
+		$rootScope.favouriteList=[];
+		$scope.data=PulseData.dat;
+		$rootScope.favAnime=true;
+		$scope.TabName = 'All';
+		$scope.TabID = '';
+
+
+		$scope.favouriteListDetails = function (){
+
+			$scope.isVisibleList='loader';
+
+			$scope.requestType="getFavourites";
+			$scope.requestParam={adid :$rootScope.userId,random:Math.random()};
+
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessfavouriteList,$scope.OnfailurefavouriteList)
+
+		}
+
+		$scope.OnSuccessfavouriteList = function(response) {
+			$rootScope.favouriteList = [];
+
+		$rootScope.favouriteList=response.data.files;
+		var isAvail = false;
+		angular.forEach(response.data.files,function(key,value){
+		if(key.category_name == $scope.TabName){
+		isAvail = true;
+		}
+
+		});
+	console.log(isAvail);
+
+	$rootScope.favouriteFilter=(isAvail)? $scope.TabID : "";
+
+	PulseData.setCategoryTitle( (isAvail)? $scope.TabName : "All");
+
+		PulseData.setCategoryIcon("inventory.png");
+		$scope.isVisibleList='list';
+		$scope.progressbar.complete();
+
+		//$rootscope.favouriteSideList=response.data.files;
+
+
+	}
+
+	$scope.OnfailurefavouriteList=function(response){
+
+		console.log("Favourite List HTTP Fail");
+	}
+
+    $scope.favouriteRemove = function(index,listval){
+    	//$rootScope.favAnime=true;
+    	console.log($rootScope.favAnime);
+        $scope.requestType="deleteFav";
+        $scope.requestParam={category_id :listval.category_id,report_id : listval.report_id, adid: $rootScope.userId};
+
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessDelFavourties,$scope.OnfailureDelFavourites);
+      // $rootScope.favouriteList.splice(index,1);
+      $scope.TabName = listval.category_name;
+	$scope.TabID = listval.category_id;
+
+    }
+
+    $scope.OnSuccessDelFavourties = function(response){
+    console.log("fav-tab-removed");
+    $scope.favouriteListDetails();
+
+    }
+    $scope.OnfailureDelFavourites = function(){
+
+     console.log("fav-tab-remove failed");
+    }
+
+    $scope.myFilter = function (item) {
+    return item.category_id === $rootScope.favouriteFilter || $rootScope.favouriteFilter  == '' ;
+	}
+
+	$scope.tracker = function(x){
+
+		console.log("called");
+		$scope.requestParam={user_id:sessionStorage.getItem("P_user"),App_id:1,Region:sessionStorage.getItem("P_user_region"),mod_id:x.report_id};
+		$scope.requestType='viewsCount';
+		PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessViewsCount,$scope.OnfailureViewsCount);
+	}
+
+	$scope.OnSuccessViewsCount = function(response){
+
+		console.log(response.data);
+
+	}
+	$scope.OnfailureViewsCount = function(){
+
+		console.log("failure viewscount");
+	}
+
+	$scope.init = function(){
+
+		//	$scope.progressbar = ngProgressFactory.createInstance();
+        // 	$scope.progressbar.start();
+
+
+			if(sessionStorage.getItem("P_user")){
+
+			$scope.favouriteListDetails();
+			}else{
+				$state.go('login');
+			}
+
+
+
+
+	}
+	$scope.init();
+
+});

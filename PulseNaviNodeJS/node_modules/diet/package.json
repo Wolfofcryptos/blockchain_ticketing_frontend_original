@@ -1,0 +1,107 @@
+{
+  "name": "diet",
+  "version": "0.10.8",
+  "description": "A tiny, fast and modular node.js web framework. Good for making fast & scalable apps and apis.",
+  "homepage": "http://dietjs.com/",
+  "keywords": [
+    "diet",
+    "web",
+    "framework",
+    "http",
+    "https",
+    "api",
+    "routing",
+    "router",
+    "page routing",
+    "url parse",
+    "middleware",
+    "connect",
+    "plugins",
+    "modules",
+    "querystring",
+    "rest",
+    "restful",
+    "web server",
+    "domains",
+    "subdomains",
+    "vhost",
+    "hosting",
+    "virtual hosts",
+    "request",
+    "response",
+    "dietjs",
+    "diet.js"
+  ],
+  "bugs": {
+    "url": "http://github.com/adamhalasz/diet/issues",
+    "email": "mail@adamhalasz.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamhalasz/diet.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Halász Ádám",
+    "email": "mail@adamhalasz.com",
+    "url": "http://adamhalasz.com/"
+  },
+  "dependencies": {
+    "async": "^1.5.2",
+    "callsite": "^1.0.0",
+    "clone": "^1.0.2",
+    "colors": "^1.0.3",
+    "querystrings": ">=0.3.0",
+    "es6-iterator": "^0.1.1",
+    "etag": "^1.5.0",
+    "eventemitter2": "^0.4.14",
+    "ip": "^0.3.3",
+    "merge": "^1.2.0",
+    "nextjs": "0.0.3",
+    "object.observe": "^0.2.6",
+    "path-to-regexp": "^1.0.1",
+    "sugar": "^1.4.1"
+  },
+  "devDependencies": {
+    "coveralls": ">=2.11.2",
+    "mocha-lcov-reporter": "0.0.1",
+    "istanbul": "~0.3.2",
+    "mocha": "~1.21.4",
+    "request": "^2.48.0",
+    "should": "^8.2.2"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "scripts": {
+    "test": "mocha tests",
+    "coveralls": "jscoverage tests tests-cov"
+  },
+  "gitHead": "e8328594b9202b16e6851b4c5cb92e7ae27b81a0",
+  "_id": "diet@0.10.8",
+  "_shasum": "309848545dcde404f1c9953d353c4538253f0a35",
+  "_from": "diet@latest",
+  "_npmVersion": "3.8.6",
+  "_nodeVersion": "6.0.0",
+  "_npmUser": {
+    "name": "adamhalasz",
+    "email": "mail@adamhalasz.com"
+  },
+  "dist": {
+    "shasum": "309848545dcde404f1c9953d353c4538253f0a35",
+    "tarball": "https://registry.npmjs.org/diet/-/diet-0.10.8.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "adamhalasz",
+      "email": "mail@adamhalasz.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/diet-0.10.8.tgz_1465881165350_0.48296794621273875"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/diet/-/diet-0.10.8.tgz"
+}

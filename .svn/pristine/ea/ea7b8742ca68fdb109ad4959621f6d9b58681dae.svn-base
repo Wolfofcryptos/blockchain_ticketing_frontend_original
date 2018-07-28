@@ -1,0 +1,60 @@
+     <div class="container-fluid">
+                         <div class="row">
+                              <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 fp-panel">
+                                   <div class="content-wrapper">
+                                             <div class="content-header">
+                                                  <img src="{{data+'sideicons/inventory.png'}}" class="content-image" alt="content-icon">
+                                                  <h3 class="content-title pull-left">
+                                                       Category
+                                                  </h3>
+
+                                                 <!--  <button class="btn btn-content-add pull-right"><span class="icon-fp-icon-add"> Add</span></button> -->
+                                                  <div class="clearfix"></div>
+                                             </div>
+                                   </div>
+                              </div>
+                         </div>
+                    </div>
+                    <!-- Report Panels -->
+                    <div class="container-fluid">
+                         <div class="row">
+                              <div class="col-sm-12 col-xs-12 col-md-12 col-lg-12 fp-panel">
+                                   <div class="box">
+                                        <table class="table">
+                                             <thead>
+                                                  <tr>
+                                                       <th>Category</th>
+                                                     <!--   <th style="text-align:center">Description</th>  -->
+                                                       <th>Access Status</th>
+                                                  </tr>
+                                             </thead>
+                                             <tbody>
+                                                  <tr ng-repeat="Reqtype in requestList" style="height:30px">
+                                                       <td>{{Reqtype.category_name}}</td>
+                                                       <!--  <td style="text-align:center"><button class="btn btn-link btn-desc "><span class="icon-fp-icon-comment"></span></button></td>  -->
+                                                       <td ng-show="Reqtype.UserCat==1"><span class="green">Active</span></td>
+                                                       <td ng-show="Reqtype.UserCat==0"><button class="btn btn-reqacc">Request</button></td>
+                                                       
+                                                  </tr>
+                                                  <!-- <tr>
+                                                       <td>Manufacture</td>
+                                                       <td style="text-align:center"><button class="btn btn-link btn-desc"><span class="icon-fp-icon-comment"></span></button></td>
+                                                       <td><button class="btn btn-reqacc">Request</button></td>
+                                                  
+                                                  </tr>
+                                                  <tr>
+                                                       <td>Order Management</td>
+                                                       <td style="text-align:center"><button class="btn btn-link btn-desc"><span class="icon-fp-icon-comment"></span></button></td>
+                                                       <td><span class="orange">Pending</span></td>
+                                                       
+                                                  </tr>
+                                                  <tr>
+                                                       <td>People & Resources</td>
+                                                       <td style="text-align:center"><button class="btn btn-link btn-desc"><span class="icon-fp-icon-comment"></span></button></td>
+                                                       <td><span class="red">Denied</td>
+                                                       
+                                                  </tr> -->
+                                             </tbody>
+                                        </table>
+                                   </div>
+                              </div>

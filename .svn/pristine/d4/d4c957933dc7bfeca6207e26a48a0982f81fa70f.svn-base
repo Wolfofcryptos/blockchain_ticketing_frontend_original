@@ -1,0 +1,72 @@
+{
+  "name": "querystrings",
+  "version": "0.3.0",
+  "description": "An advanced Query String parser that converts values into their correct Data Types and supports Nested Query Parameters. ",
+  "keywords": [
+    "qs",
+    "query string",
+    "parse query string",
+    "stringify query string",
+    "query",
+    "string",
+    "nested",
+    "numbers",
+    "booleans",
+    "objects",
+    "arrays",
+    "url",
+    "uri",
+    "convert",
+    "transform",
+    "traverse"
+  ],
+  "bugs": {
+    "url": "http://github.com/adamhalasz/querystrings/issues",
+    "email": "mail@adamhalasz.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/adamhalasz/querystrings.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Halász Ádám",
+    "email": "mail@adamhalasz.com",
+    "url": "http://adamhalasz.com/"
+  },
+  "dependencies": {
+    "sugar": "1.4.1"
+  },
+  "main": "index.js",
+  "engines": {
+    "node": ">=0.8.0"
+  },
+  "gitHead": "b953a2a75d25bc50697ee67b5881ef10fd758dc7",
+  "homepage": "https://github.com/adamhalasz/querystrings#readme",
+  "_id": "querystrings@0.3.0",
+  "scripts": {},
+  "_shasum": "1a4fe9cc1771a99303ca21c89973c5e1f99c13db",
+  "_from": "querystrings@>=0.3.0",
+  "_npmVersion": "3.8.6",
+  "_nodeVersion": "6.0.0",
+  "_npmUser": {
+    "name": "adamhalasz",
+    "email": "mail@adamhalasz.com"
+  },
+  "dist": {
+    "shasum": "1a4fe9cc1771a99303ca21c89973c5e1f99c13db",
+    "tarball": "https://registry.npmjs.org/querystrings/-/querystrings-0.3.0.tgz"
+  },
+  "maintainers": [
+    {
+      "name": "adamhalasz",
+      "email": "mail@adamhalasz.com"
+    }
+  ],
+  "_npmOperationalInternal": {
+    "host": "packages-16-east.internal.npmjs.com",
+    "tmp": "tmp/querystrings-0.3.0.tgz_1465833996793_0.38629321777261794"
+  },
+  "directories": {},
+  "_resolved": "https://registry.npmjs.org/querystrings/-/querystrings-0.3.0.tgz"
+}

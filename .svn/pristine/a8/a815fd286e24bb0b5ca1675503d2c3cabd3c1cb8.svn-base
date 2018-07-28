@@ -1,0 +1,53 @@
+/*
+File Name : PulseNavigationService.js
+Absolute Path : js/services/PulseNavigationService.js
+Author : Flex , Emergining Technologies
+Created Date : 04/Sep/2016
+Functions :
+*/
+
+pulseapp.factory('PulseData', function ($rootScope,$http) {
+
+	//var Host = "http://localhost/pulsenavigationwebservice/api/";
+	var Host = "http://mobileserver.flextronics.com:3006/";
+	var tempHost = "https://mobileweb.flextronics.com/";
+	var loginAPIUrl="crisisV1/";
+	return{
+		getdata: function (requestParam,requestType,onSuccess, onFailure){
+
+		$http( {
+                params : requestParam,
+                method : "GET",
+                headers : {'Accept' : 'application/json','Content-Type': 'text/plain','Content-Type': 'application/x-www-form-urlencoded; charset=utf-8'},
+                url : Host+requestType,
+                })
+                .then(onSuccess, onFailure);
+
+		},
+
+		getAuthenticate : function (requestParam,serviceType,onSuccuess, onFailure)
+        {
+
+          var  url = tempHost+ loginAPIUrl+serviceType;          
+            
+            $http({
+                method: 'POST',
+                url: url,
+                data: requestParam,
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+                }).then(onSuccuess, onFailure);
+
+        },
+
+		setFavouriteFilter: function (val){
+			$rootScope.favouriteFilter=val;
+		},
+		setCategoryTitle: function (val){
+			$rootScope.categoryTitle=val;
+		}
+
+
+	}
+
+
+});

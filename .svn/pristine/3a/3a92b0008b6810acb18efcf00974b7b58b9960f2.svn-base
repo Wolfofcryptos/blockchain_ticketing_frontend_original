@@ -1,0 +1,45 @@
+/*
+
+
+
+*/
+
+
+var favouritesController = pulseapp.controller('favouritesController', function ($scope, $rootScope,PulseData) {
+		//$scope.favouriteList=[];
+		$rootScope.favouriteList=[];
+		$scope.requestParam='';
+
+		$scope.favouriteListDetails = function (){
+
+
+			$scope.requestType="getFavourites";
+
+			PulseData.getdata($scope.requestParam,$scope.requestType,$scope.OnSuccessfavouriteList,$scope.OnfailurefavouriteList)
+
+		}
+
+		$scope.OnSuccessfavouriteList = function(response) {
+
+		$rootScope.favouriteList=response.data.files;
+		//$rootscope.favouriteSideList=response.data.files;
+
+
+	}
+
+	$scope.OnfailurefavouriteList=function(response){
+
+		console.log("Favourite List HTTP Fail");
+	}
+
+
+	$scope.init = function(){
+
+
+		$scope.favouriteListDetails();
+
+
+	}
+	$scope.init();
+
+});
