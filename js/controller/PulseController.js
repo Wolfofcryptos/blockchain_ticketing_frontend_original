@@ -33,10 +33,10 @@ var pulseController = pulseapp.controller('pulseController', function ($rootScop
 
 			console.log("called");
 			$state.go('home.report');
-			$scope.firstname='Prathic';
-			$scope.secondName='Srinivas';
-			$scope.mail='prathic.srinivas@yahoo.com';
-			$scope.pwd="prathicK91";
+			$scope.firstname='True';
+			$scope.secondName='Ticketing';
+			$scope.mail='true.ticketing@yahoo.com';
+			$scope.pwd="trueticketing";
 			$scope.serviceType="user/register";
 			$scope.requestParam={first_name:$scope.firstname,last_name:$scope.secondName,emailId:$scope.mail,password:$scope.pwd};
 
@@ -145,7 +145,7 @@ var pulseController = pulseapp.controller('pulseController', function ($rootScop
 		$scope.init= function() {
 			$rootScope.SelectedIndex='Home';
 			$rootScope.usertext="LogIn";
-			$rootScope.settings="LogIn";
+			$rootScope.settings="User LogIn";
 			$rootScope.loggedin=true;
 			$rootScope.logout=true;
 			$scope.reportlist();
